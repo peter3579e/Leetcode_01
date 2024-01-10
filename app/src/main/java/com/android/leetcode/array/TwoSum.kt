@@ -1,5 +1,6 @@
 package com.android.leetcode.array
 
+//Easy
 object TwoSum {
     fun twoSum(nums: IntArray, target: Int): IntArray {
         for (i in nums.indices) {

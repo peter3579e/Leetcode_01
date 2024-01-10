@@ -1,6 +1,7 @@
 package com.android.leetcode.array
 
 
+//Medium
 object ThreeSum {
     /*
     Brute solve failed not able to eliminate duplicated output, the duplication was solved by
