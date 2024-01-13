@@ -1,6 +1,7 @@
 package com.android.leetcode.graph
 
 import java.util.LinkedList
+import kotlin.math.max
 
 object MaxAreaOfIsland {
 
@@ -14,9 +15,8 @@ object MaxAreaOfIsland {
         for (r in 0..row) {
             for (c in 0..column) {
                 if(grid[r][c] == 1) {
-                    grid[r][c] = 0
-                    bfs(grid, intArrayOf(r,c))
-                    if(area > maxArea) maxArea = area
+                    dfs(grid, intArrayOf(r,c))
+                    maxArea = max(maxArea, area)
                     area = 0
                 }
             }
@@ -28,6 +28,8 @@ object MaxAreaOfIsland {
     private fun dfs(grid: Array<IntArray>, start: IntArray) {
         var x = start[0]
         var y = start[1]
+        grid[x][y] = 0
+        area ++
         var top = intArrayOf(x-1,y)
         var right = intArrayOf(x,y+1)
         var left = intArrayOf(x, y-1)
@@ -35,8 +37,6 @@ object MaxAreaOfIsland {
 
         for(point in listOf(top, right, left, down)) {
             if(!isIsland(grid, point[0], point[1])) continue
-            area ++
-            grid[point[0]][point[1]] = 0
             dfs(grid, point)
         }
     }

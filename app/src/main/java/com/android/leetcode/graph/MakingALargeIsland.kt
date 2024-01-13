@@ -2,10 +2,11 @@ package com.android.leetcode.graph
 
 import java.util.Stack
 
-class MakingALargeIsland {
 
-    private val dr = intArrayOf(-1, 0, 1, 0)
-    private val dc = intArrayOf(0, -1, 0, 1)
+object MakingALargeIsland {
+
+    //this is the best solution I can write, but it exceed the time limit
+    var area = 0
 
     fun largestIsland(grid: Array<IntArray>): Int {
         val N = grid.size
@@ -16,40 +17,56 @@ class MakingALargeIsland {
             for (c in 0 until N)
                 if (grid[r][c] == 0) {
                     hasZero = true
-                    grid[r][c] = 1
-                    ans = Math.max(ans, check(grid, r, c))
-                    grid[r][c] = 0
+                    val newGrid = deepCopy(grid) // Create a deep copy of the grid
+                    newGrid[r][c] = 1
+                    dfs(newGrid, intArrayOf(r, c))
+                    ans = Math.max(ans, area)
+                    area = 0
                 }
 
         return if (hasZero) ans else N * N
     }
 
-    private fun check(grid: Array<IntArray>, r0: Int, c0: Int): Int {
-        val N = grid.size
-        val stack = Stack<Int>()
-        val seen = HashSet<Int>()
-        stack.push(r0 * N + c0)
-        seen.add(r0 * N + c0)
+    private fun dfs(grid: Array<IntArray>, start: IntArray) {
+        var x = start[0]
+        var y = start[1]
+        grid[x][y] = 0
+        area++
+        var top = intArrayOf(x - 1, y)
+        var left = intArrayOf(x, y - 1)
+        var right = intArrayOf(x, y + 1)
+        var down = intArrayOf(x + 1, y)
 
-        while (stack.isNotEmpty()) {
-            val code = stack.pop()
-            val r = code / N
-            val c = code % N
-            for (k in 0 until 4) {
-                val nr = r + dr[k]
-                val nc = c + dc[k]
-                if (!seen.contains(nr * N + nc) && 0 <= nr && nr < N &&
-                    0 <= nc && nc < N && grid[nr][nc] == 1) {
-                    stack.push(nr * N + nc)
-                    seen.add(nr * N + nc)
-                }
+        for (point in listOf(top, left, right, down)) {
+            if (!isIsland(grid, point[0], point[1])) continue
+            dfs(grid, point)
+        }
+    }
+
+    private fun isIsland(grid: Array<IntArray>, x: Int, y: Int) =
+        x >= 0 && y >= 0 && x < grid.size && y < grid.size && grid[x][y] == 1
+
+    private fun deepCopy(grid: Array<IntArray>): Array<IntArray> {
+        return Array(grid.size) { row ->
+            IntArray(grid[row].size) { col ->
+                grid[row][col]
             }
         }
-
-        return seen.size
     }
+}
 
-    fun main () {
-
-    }
+fun main() {
+    //[[0,0,0,0,0,0,0],[0,1,1,1,1,0,0],[0,1,0,0,1,0,0],[1,0,1,0,1,0,0],[0,1,0,0,1,0,0],[0,1,0,0,1,0,0],[0,1,1,1,1,0,0]]
+    println(MakingALargeIsland.largestIsland(
+        arrayOf(
+            intArrayOf(0,0,0,0,0,0,0),
+            intArrayOf(0,1,1,1,1,0,0),
+            intArrayOf(0,1,0,0,1,0,0),
+            intArrayOf(1,0,1,0,1,0,0),
+            intArrayOf(0,1,0,0,1,0,0),
+            intArrayOf(0,1,0,0,1,0,0),
+            intArrayOf(0,1,1,1,1,0,0)
+        )
+    )
+    )
 }
