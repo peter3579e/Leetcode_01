@@ -30,8 +30,11 @@ object ThreeSum {
 
     //using two pointer with pointer lo and hi
     fun threeSum(nums: IntArray): List<List<Int>> {
+        // time O(NlogN)
         val sortedArray = nums.sortedArray()
+        // space O(N)
         val answer = mutableListOf<List<Int>>()
+        //time O(N)
         for (i in sortedArray.indices){
             if (i==0 || sortedArray[i-1] != sortedArray[i]) {
                 twoSum(sortedArray, i, answer)
@@ -43,11 +46,12 @@ object ThreeSum {
     private fun twoSum(nums: IntArray, i: Int, answer: MutableList<List<Int>>) {
         var lo = i+1
         var hi = nums.size-1
+        // O(N)
         while (lo < hi) {
             var sum = nums[lo]+nums[hi]+nums[i]
             if (sum == 0) {
                 answer.add(listOf(nums[i],nums[lo++],nums[hi--]))
-                while (lo < hi && nums[lo] == nums[lo - 1]) ++lo
+                while (lo < hi && nums[lo] == nums[lo - 1]) lo++
             }else if (sum < 0) {
                 lo++
             }else if (sum > 0) {
@@ -58,8 +62,9 @@ object ThreeSum {
 
     //using hashmap
     fun threeSumHashMap(nums: IntArray): List<List<Int>> {
-        val sortedArray = nums.sortedArray() // O(n log n)
-        val answer = mutableListOf<List<Int>>()
+        val sortedArray = nums.sortedArray() // time O(n log n)
+        val answer = mutableListOf<List<Int>>() // space O(n)
+        //time O(N)
         for (i in sortedArray.indices){
             if (i==0 || sortedArray[i-1] != sortedArray[i]) {
                 twoSumHashMap(sortedArray, i, answer)
@@ -85,8 +90,10 @@ object ThreeSum {
     }
 
     private fun twoSumHashMap(nums: IntArray, i: Int, answer: MutableList<List<Int>>) {
+        //Space O(N)
         var map = hashMapOf<Int,Int>()
         var pointer = i+1
+        //time O(N)
         while (pointer < nums.size) {
             var goal = -(nums[i] + nums[pointer])
             if (map.containsValue(goal)) {

@@ -17,6 +17,8 @@ object TwoSum {
 
     // using map to replace pointer to find the remain number
     fun optimizedTwoSum(nums: IntArray, target: Int): IntArray {
+        // space O(N)
+        // time O(N) + O(n)
         var map = hashMapOf<Int,Int>()
         nums.forEachIndexed { index, i ->
             val goal = target - index

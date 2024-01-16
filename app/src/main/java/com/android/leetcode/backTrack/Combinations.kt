@@ -12,6 +12,8 @@ object Combinations {
         backTrack(1, mutableListOf<Int>())
         combination.removeAt(0)
 
+
+        //space (O k ^ n-1)
         return combination
     }
 
