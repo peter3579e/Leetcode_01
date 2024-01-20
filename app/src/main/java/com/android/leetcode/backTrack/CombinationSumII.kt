@@ -7,8 +7,8 @@ object CombinationSumII {
 //    1,1,6
     var ans = mutableListOf<List<Int>>()
     fun combinationSum2(candidates: IntArray, target: Int): List<List<Int>> {
-        var newArray = candidates.sortedArray() // time complexity O(NlogN)
-        backTrack(0,newArray,mutableListOf<Int>(), target)
+        candidates.sorted() // time complexity O(NlogN)
+        backTrack(0,candidates,mutableListOf<Int>(), target)
         return ans
     }
 
