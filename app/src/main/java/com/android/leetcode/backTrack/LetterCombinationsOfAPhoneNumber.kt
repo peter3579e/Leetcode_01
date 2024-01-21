@@ -44,6 +44,19 @@ class Solution {
     }
 }
 
+/*
+* Time complexity: O(4N⋅N)O(4^N \cdot N)O(4N⋅N), where NNN is the length of digits. Note that 444 in this expression is referring to the maximum value length in the hash map, and not to the length of the input.
+
+The worst-case is where the input consists of only 7s and 9s. In that case, we have to explore 4 additional paths for every extra digit. Then, for each combination, it costs up to NNN to build the combination. This problem can be generalized to a scenario where numbers correspond with up to MMM digits, in which case the time complexity would be O(MN⋅N)O(M^N \cdot N)O(M
+N⋅N). For the problem constraints, we're given, M=4M = 4M=4, because of digits 7 and 9 having 4 letters each.
+
+Space complexity: O(N)O(N)O(N), where NNN is the length of digits.
+
+Not counting space used for the output, the extra space we use relative to input size is the space occupied by the recursion call stack. It will only go as deep as the number of digits in the input since whenever we reach that depth, we backtrack.
+
+As the hash map does not grow as the inputs grows, it occupies O(1)O(1)O(1) space
+* */
+
 fun main() {
     val solution = Solution()
     val digits = "23"
