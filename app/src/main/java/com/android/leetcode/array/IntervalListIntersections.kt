@@ -1,9 +1,9 @@
 package com.android.leetcode.array
 
 //986
-//Time Complexity: O(M+N)O(M + N)O(M+N), where M,NM, NM,N are the lengths of A and B respectively.
+//Time Complexity: O(M + N), where M,NM, NM,N are the lengths of A and B respectively.
 //
-//Space Complexity: O(M+N)O(M + N)O(M+N), the maximum size of the answer.
+//Space Complexity: O(M + N), the maximum size of the answer.
 object IntervalListIntersections {
     fun intervalIntersection(firstList: Array<IntArray>, secondList: Array<IntArray>): Array<IntArray> {
         val ans = mutableListOf<IntArray>()
