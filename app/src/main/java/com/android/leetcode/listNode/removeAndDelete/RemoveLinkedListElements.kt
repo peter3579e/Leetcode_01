@@ -1,4 +1,6 @@
-package com.android.leetcode.listNode
+package com.android.leetcode.listNode.removeAndDelete
+
+import com.android.leetcode.listNode.CreateLinkedList
 
 object RemoveLinkedListElements {
 
