@@ -60,6 +60,37 @@ As the hash map does not grow as the inputs grows, it occupies O(1)O(1)O(1) spac
 fun main() {
     val solution = Solution()
     val digits = "23"
-    val result = solution.letterCombinations(digits)
+    val result = pratice.letterCombinations(digits)
     println(result)
+}
+
+object pratice {
+
+    private val combinations: MutableList<String> = mutableListOf()
+    private val letters: Map<Char, String> = mapOf(
+        '2' to "abc", '3' to "def", '4' to "ghi", '5' to "jkl",
+        '6' to "mno", '7' to "pqrs", '8' to "tuv", '9' to "wxyz"
+    )
+    fun letterCombinations(digits: String): List<String> {
+        if (digits.isEmpty()) {
+            return combinations
+        }
+        backTrack(0, StringBuilder(), digits)
+        return combinations
+    }
+
+    fun backTrack(phoneIndex: Int, tempString: StringBuilder, phoneDigits: String) {
+        if (tempString.length == phoneDigits.length) {
+            combinations.add(tempString.toString())
+            return
+        }
+
+        var letter = letters[phoneDigits[phoneIndex]]
+
+        for (i in letter!!) {
+            tempString.append(i)
+            backTrack(phoneIndex+1, tempString, phoneDigits)
+            tempString.deleteCharAt(tempString.length-1)
+        }
+    }
 }

@@ -73,21 +73,21 @@ object ThreeSum {
         return answer
     }
 
-    private fun twoSumLoAndHi(nums: IntArray, i: Int, answer: MutableList<List<Int>>) {
-        var lo = i+1
-        var hi = nums.size-1
-        while (lo < hi) {
-            var sum = nums[lo] + nums[hi] + nums[i]
-            if (sum == 0) {
-                answer.add(listOf(nums[lo++],nums[hi--],nums[i]))
-                while(lo < nums.size && nums[lo]==nums[lo-1]) lo++
-            }else if (sum > 0) {
-                hi--
-            }else {
-                lo ++
-            }
-        }
-    }
+//    private fun twoSumLoAndHi(nums: IntArray, i: Int, answer: MutableList<List<Int>>) {
+//        var lo = i+1
+//        var hi = nums.size-1
+//        while (lo < hi) {
+//            var sum = nums[lo] + nums[hi] + nums[i]
+//            if (sum == 0) {
+//                answer.add(listOf(nums[lo++],nums[hi--],nums[i]))
+//                while(lo < nums.size && nums[lo]==nums[lo-1]) lo++
+//            }else if (sum > 0) {
+//                hi--
+//            }else {
+//                lo ++
+//            }
+//        }
+//    }
 
     private fun twoSumHashMap(nums: IntArray, i: Int, answer: MutableList<List<Int>>) {
         //Space O(N)

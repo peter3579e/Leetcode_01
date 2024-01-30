@@ -20,15 +20,31 @@ object TwoSum {
         // space O(N)
         // time O(N) + O(n)
         var map = hashMapOf<Int,Int>()
-        nums.forEachIndexed { index, i ->
-            val goal = target - index
-            if (map[goal] != null) return intArrayOf(map[goal]!!,i)
-            map[i] = index
+        nums.forEachIndexed { index, number ->
+            val goal = target - number
+            if (map[goal] != null) return intArrayOf(map[goal]!!,index)
+            map[number] = index
         }
         return intArrayOf()
+    }
+
+    fun twoPointer(nums: IntArray, target: Int): IntArray {
+        var lo = 0
+        var hi = nums.size-1
+
+        while (lo < hi) {
+            var sum = nums[lo] + nums[hi]
+            if (sum == target) return intArrayOf(lo,hi)
+            else if (sum < target) {
+                lo++
+            }else {
+                hi--
+            }
+        }
+        return  intArrayOf()
     }
 }
 
 fun main () {
-    println(TwoSum.optimizedTwoSum(intArrayOf(2,7,11,15), 9))
+    println(TwoSum.twoPointer(intArrayOf(2,7,11,15), 9).toList())
 }
