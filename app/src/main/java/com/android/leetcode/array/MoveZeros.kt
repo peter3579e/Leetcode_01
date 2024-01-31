@@ -21,8 +21,26 @@ object MoveZeros {
 
     }
 
+    fun moveZeroesOptimal(nums: IntArray): Unit {
+
+        var writer = 0
+
+        for(reader in 0..nums.size-1) {
+            if(nums[reader] != 0) {
+                nums[writer] = nums[reader]
+                writer ++
+            }
+        }
+
+        while(writer < nums.size) {
+            nums[writer] = 0
+            writer ++
+        }
+
+    }
+
 }
 
 fun main() {
-    MoveZeros.moveZeroes(intArrayOf(0,1,0,3,12))
+    MoveZeros.moveZeroesOptimal(intArrayOf(1,1,0,3,12))
 }

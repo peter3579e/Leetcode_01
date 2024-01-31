@@ -26,8 +26,19 @@ object BulbSwitcher {
         }
         return count
     }
+
+    fun bulbSwitch2(n: Int): Int {
+        if (n == 0 || n==1) return n
+        var count = 0
+
+        for(i in 1..n) {
+            if(Math.pow(i.toDouble(),2.0) < n) count ++
+        }
+
+        return count
+    }
 }
 
 fun main() {
-    print(BulbSwitcher.bulbSwitch(9))
+    print(BulbSwitcher.bulbSwitch2(9))
 }
