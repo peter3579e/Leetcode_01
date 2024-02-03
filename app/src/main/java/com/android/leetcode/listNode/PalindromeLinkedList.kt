@@ -29,17 +29,123 @@ object PalindromeLinkedList {
         }
         return true
     }
+
+
+    fun isPalindrome2(head: CreateLinkedList.ListNode?): Boolean {
+
+        var firstHalfEnd = head?.let { findTheFirstHalf(it) }
+        var secondHalfStart = reversedLinkedList(firstHalfEnd!!)
+
+        var cur = head
+        var second: CreateLinkedList.ListNode? = secondHalfStart
+        while (cur != null && second != null) {
+            if (cur.`val` != second.`val`) return false
+            cur = cur.next
+            second = second.next
+        }
+        return true
+    }
+
+    fun reversedLinkedList (head: CreateLinkedList.ListNode):CreateLinkedList.ListNode {
+        var cur: CreateLinkedList.ListNode?  = head
+        var prev: CreateLinkedList.ListNode? = null
+        while (cur != null) {
+            var nextTemp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nextTemp
+        }
+        return prev!!
+    }
+
+
+    fun findTheFirstHalf(head: CreateLinkedList.ListNode):CreateLinkedList.ListNode {
+        var slow: CreateLinkedList.ListNode? = head
+        var fast: CreateLinkedList.ListNode?  = head
+        while (fast != null && fast.next != null) {
+            fast = fast.next?.next
+            slow = slow?.next
+        }
+        return slow!!
+    }
 }
 
 fun main() {
-    var one = CreateLinkedList.ListNode(1)
-    var two = CreateLinkedList.ListNode(2)
-    var two1 = CreateLinkedList.ListNode(2)
-    var one1 = CreateLinkedList.ListNode(1)
+    var one = Solution.ListNode(1)
+    var two = Solution.ListNode(2)
+//    var two1 = Solution.ListNode(2)
+//    var one1 = Solution.ListNode(1)
 
     one.next = two
-    two.next = two1
-    two1.next = one1
+//    two.next = two1
+//    two1.next = one1
 
-    PalindromeLinkedList.isPalindrome(one)
+//    CreateLinkedList.printLinkedList(PalindromeLinkedList.reversedLinkedList(one))
+
+    print(Solution2.isPalidrome(one))
+}
+
+object Solution {
+
+
+    class ListNode(var `val`: Int) {
+             var next: ListNode? = null
+    }
+    fun isPalidrome(root: ListNode?): Boolean {
+
+        var firstEnd = findFirstHalfEnd(root!!)
+        var reverseSecondStart = reverseSecondHalf(firstEnd)
+        var head: ListNode? = root
+        var second: ListNode? = reverseSecondStart
+        while (head != null && second != null) {
+            if (head.`val` != second.`val`) return false
+            head = head.next
+            second = second.next
+        }
+
+        return true
+    }
+
+    private fun reverseSecondHalf(head: ListNode): ListNode {
+        var cur: ListNode? = head
+        var prev: ListNode? = null
+        while (cur != null) {
+            var tempNext = cur.next
+            cur.next = prev
+            prev = cur
+            cur = tempNext
+        }
+        return prev!!
+    }
+
+    private fun findFirstHalfEnd(head: ListNode): ListNode {
+        var slow: ListNode? = head
+        var fast: ListNode? = head
+
+        while (fast != null && fast.next != null) {
+            slow = slow!!.next!!
+            fast = fast.next?.next
+        }
+
+        return slow!!
+    }
+}
+
+object Solution2 {
+    var isPalidrom = true
+    var slow: Solution.ListNode? = null
+    fun isPalidrome(root: Solution.ListNode?): Boolean {
+
+        slow = root
+
+        return twoPointer(root)
+    }
+
+    private fun twoPointer(head: Solution.ListNode?): Boolean {
+        if(head == null || slow == null) return true
+        if(!twoPointer(head.next)) return false
+        if(head.`val` != slow!!.`val`) return false
+        slow = slow!!.next
+        return true
+    }
 }

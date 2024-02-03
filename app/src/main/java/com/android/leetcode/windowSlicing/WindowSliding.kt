@@ -51,8 +51,8 @@ object WindowSliding {
             charArray[cur - 'a'] = charArray[cur - 'a'] + 1
 
             while (charArray[cur - 'a'] > 1) {
+                charArray[s[start] - 'a'] = charArray[s[start] - 'a'] - 1
                 start ++
-                charArray[cur - 'a'] = charArray[cur - 'a'] - 1
             }
 
             windowSize = maxOf(windowSize, end-start + 1)
@@ -60,8 +60,25 @@ object WindowSliding {
 
         return windowSize
     }
+
+    fun lengthOfLongestSubstring(s: String): Int {
+        var map = HashMap<Char,Int>()
+        var lo = 0
+        var windowSize = 0
+        for(hi in 0..s.length-1) {
+            var curChar = s[hi]
+            map[s[hi]] = map.getOrDefault(s[hi], 0) + 1
+            while(map[curChar]!! > 1) {
+                map[s[lo]] = map[s[lo]]!! - 1
+                lo ++
+            }
+            windowSize = maxOf(windowSize, hi-lo+1)
+        }
+
+        return windowSize
+    }
 }
 
 fun main() {
-    print(WindowSliding.windowSlidingDynamic("abcabcbb"))
+    print(WindowSliding.lengthOfLongestSubstring("pwwkew"))
 }
