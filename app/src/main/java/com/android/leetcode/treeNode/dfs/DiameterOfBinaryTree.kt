@@ -1,4 +1,4 @@
-package com.android.leetcode.treeNode
+package com.android.leetcode.treeNode.dfs
 class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null

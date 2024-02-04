@@ -1,5 +1,6 @@
-package com.android.leetcode.treeNode
+package com.android.leetcode.treeNode.bfs
 
+import com.android.leetcode.treeNode.dfs.TreeNode
 import java.util.LinkedList
 
 object BinaryTreeZigzagLevelOrderTraversal {

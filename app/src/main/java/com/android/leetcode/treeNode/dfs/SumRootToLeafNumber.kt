@@ -1,4 +1,4 @@
-package com.android.leetcode.treeNode
+package com.android.leetcode.treeNode.dfs
 
 // the time complexity is O(N)
 // spce is O(1)

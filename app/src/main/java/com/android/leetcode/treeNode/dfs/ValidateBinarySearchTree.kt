@@ -1,4 +1,4 @@
-package com.android.leetcode.treeNode
+package com.android.leetcode.treeNode.dfs
 
 object ValidateBinarySearchTree {
     var ans = true

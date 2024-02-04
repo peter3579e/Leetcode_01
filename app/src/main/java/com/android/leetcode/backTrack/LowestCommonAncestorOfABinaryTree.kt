@@ -1,6 +1,6 @@
 package com.android.leetcode.backTrack
 
-import com.android.leetcode.treeNode.TreeNode
+import com.android.leetcode.treeNode.dfs.TreeNode
 
 // time complexity is O(N)
 // Space is O(N)

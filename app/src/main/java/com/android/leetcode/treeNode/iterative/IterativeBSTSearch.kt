@@ -1,6 +1,6 @@
 package com.android.leetcode.treeNode.iterative
 
-import com.android.leetcode.treeNode.TreeNode
+import com.android.leetcode.treeNode.dfs.TreeNode
 import java.util.Stack
 
 object IterativeBSTSearch {
