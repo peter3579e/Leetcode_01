@@ -1,6 +1,7 @@
 package com.android.leetcode.listNode.rotate
 
 import com.android.leetcode.listNode.CreateLinkedList
+import com.android.leetcode.listNode.ListNode
 
 object RotateList {
     // faile
@@ -95,13 +96,48 @@ object RotateList {
     }
 }
 
+class Solution {
+    fun rotateRight(head: ListNode?, k: Int): ListNode? {
+        if(head == null) return null
+        if(head.next == null) return head
+
+        var dummyHead = ListNode(0)
+        dummyHead.next = head
+        var cur: ListNode? = head
+
+        var size = 1
+
+        while(cur!= null && cur.next != null) {
+            size ++
+            cur = cur.next
+        }
+
+        var rotate = k%size
+
+        if(rotate == 0) return head
+
+        var newCur = head
+
+        for(i in 0 until size - rotate - 1) {
+            newCur = newCur!!.next
+        }
+        var temp = newCur!!.next
+        newCur!!.next = null
+        cur!!.next = head
+        dummyHead.next = temp
+
+        return dummyHead.next
+    }
+}
+
 fun main() {
-    var zero = CreateLinkedList.ListNode(0)
-    var first = CreateLinkedList.ListNode(1)
-    var second = CreateLinkedList.ListNode(2)
+    var solution = Solution()
+    var zero = ListNode(0)
+    var first = ListNode(1)
+    var second = ListNode(2)
 
     zero.next = first
     first.next = second
 
-    CreateLinkedList.printLinkedList(RotateList.rotateRight1(zero, 4))
+    solution.rotateRight(zero, 4)
 }
