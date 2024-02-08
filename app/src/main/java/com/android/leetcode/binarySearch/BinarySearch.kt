@@ -22,16 +22,30 @@ object BinarySearch {
     fun binarySearch2(array: IntArray, target: Int): Int {
         var l = 0
         var r = array.size-1
-        while (l <= r) {
+        while (l < r) {
             val mid = (l+r) / 2
-            if (array[mid] == target) return mid
-            else if (array[mid] > target) r = mid - 1
+            if (array[mid] >= target) r = mid
             else l = mid + 1
         }
+        return l
+    }
+
+    fun binarySearch3(arr: IntArray, target: Int): Int {
+
+        var left = 0
+        var right = arr.size-1
+
+        while(left <= right) {
+            var mid = (left+right)/2
+            if(arr[mid] == target) return mid
+            else if (arr[mid] > target) right = mid - 1
+            else left = mid + 1
+        }
+
         return -1
     }
 }
 
 fun main () {
-    print(BinarySearch.binarySearch2(intArrayOf(1,2,3,4,5,6),6))
+    print(BinarySearch.binarySearch3(intArrayOf(1,2,3,4,5,6),1))
 }

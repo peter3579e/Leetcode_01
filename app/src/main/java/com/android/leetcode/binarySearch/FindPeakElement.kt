@@ -24,5 +24,5 @@ object FindPeakElement {
 }
 
 fun main () {
-    print(FindPeakElement.findPeakElement(intArrayOf(1, 2, 3, 1)))
+    print(FindPeakElement.findPeakElement2(intArrayOf(1, 2, 3, 5)))
 }

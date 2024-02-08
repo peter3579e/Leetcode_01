@@ -61,6 +61,7 @@ fun main() {
     fifth.left = one
     fifth.right = four
     four.left = three
+
     four.right = six
 
     print(ValidateBinarySearchTree.isValidBST3(fifth))
