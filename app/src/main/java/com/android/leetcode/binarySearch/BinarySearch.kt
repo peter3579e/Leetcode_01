@@ -47,5 +47,6 @@ object BinarySearch {
 }
 
 fun main () {
-    print(BinarySearch.binarySearch3(intArrayOf(1,2,3,4,5,6),1))
+    print(2730 % 100)
+    Math.pow(10.0,1.0)
 }

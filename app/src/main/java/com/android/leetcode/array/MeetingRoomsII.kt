@@ -112,5 +112,5 @@ object MeetingRoomsII {
 }
 
 fun main() {
-    print(MeetingRoomsII.minMeetingRooms4(arrayOf(intArrayOf(0,30), intArrayOf(5,10), intArrayOf(15,20))))
+    print(MeetingRoomsII.minMeetingRoomsOptimal(arrayOf(intArrayOf(0,30), intArrayOf(5,10), intArrayOf(15,20))))
 }
