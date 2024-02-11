@@ -77,5 +77,5 @@ object TopKFrequentsElement {
 }
 
 fun main() {
-    print(TopKFrequentsElement.topKFrequent(intArrayOf(1,1,1,2,2,3), 2).toList())
+    print(TopKFrequentsElement.topKFrequent2(intArrayOf(1,1,1,2,2,3), 2).toList())
 }

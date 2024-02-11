@@ -1,5 +1,8 @@
 package com.android.leetcode.string
 
+import java.util.Stack
+import kotlin.math.sqrt
+
 // TIME O(N)
 // SPACE O(1)
 object MinimumAddToMakeParenthesesValid {
@@ -25,4 +28,25 @@ object MinimumAddToMakeParenthesesValid {
 
         return  ans + bal
     }
+
+    fun minAddToMakeValid2(s: String): Int {
+
+        var stack = Stack<Char>()
+
+        for(i in s) {
+            if(i == ')') {
+                if(stack.isNotEmpty() && stack.peek() == '(') {
+                    stack.pop()
+                    continue
+                }
+            }
+            stack.push(i)
+        }
+
+        return  stack.size
+    }
+}
+
+fun main() {
+    println(MinimumAddToMakeParenthesesValid.minAddToMakeValid("((("))
 }

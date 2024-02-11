@@ -19,6 +19,7 @@ object BinarySearch {
     }
 
     // time complexity is O(logN) and space complexity is O(1)
+    // this binary search is for graph, not for finishing a existing element in the array
     fun binarySearch2(array: IntArray, target: Int): Int {
         var l = 0
         var r = array.size-1
@@ -47,6 +48,5 @@ object BinarySearch {
 }
 
 fun main () {
-    print(2730 % 100)
-    Math.pow(10.0,1.0)
+    println(BinarySearch.binarySearch2(intArrayOf(1,2,3,4,5,6), 5))
 }
