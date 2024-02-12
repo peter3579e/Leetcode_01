@@ -29,15 +29,13 @@ object VerticalOrderTraversalOfABinaryTree {
         var currColumnIndex: Int = list.get(0).column
 
         for (triplet in list) {
-            val column: Int = triplet.column
-            val value: Int = triplet.value
-            if (column == currColumnIndex) {
-                currColumn.add(value)
-            } else {
+            if (triplet.column == currColumnIndex) {
+                currColumn.add(triplet.value)
+            }else {
+                currColumnIndex = triplet.column
                 ans.add(currColumn)
-                currColumnIndex = column
-                currColumn = mutableListOf<Int>()
-                currColumn.add(value)
+                currColumn = mutableListOf()
+                currColumn.add(triplet.value)
             }
         }
         ans.add(currColumn)
