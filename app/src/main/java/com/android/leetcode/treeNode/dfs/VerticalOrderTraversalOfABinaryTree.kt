@@ -1,26 +1,47 @@
 package com.android.leetcode.treeNode.dfs
 
-import java.util.PriorityQueue
 
 object VerticalOrderTraversalOfABinaryTree {
 
-    var map = hashMapOf<Int, MutableList<Int>>()
+    var list = mutableListOf<TripLet>()
+    data class TripLet(
+        val row: Int,
+        var column: Int,
+        var value: Int
+    )
+
 
     fun verticalTraversal(root: TreeNode?): List<List<Int>> {
         dfs(root, intArrayOf(0,0)) // O(N)
-        var heap = PriorityQueue {n1: Int?, n2: Int? ->
-            n1!!.compareTo(n2!!)
+        list.sortWith { t1: TripLet, t2: TripLet ->
+            if (t1.column == t2.column && t1.row == t2.row) {
+                t1.value.compareTo(t2.value)
+            } else if (t1.column == t2.column && t1.row != t2.row) {
+                t1.row.compareTo(t2.row)
+            } else {
+                t1.column.compareTo(t2.column)
+            }
         }
-        map.forEach {key, value ->
-            heap.offer(key)
-        } //O(NlogN)
 
         var ans = mutableListOf<List<Int>>()
 
-        while(heap.isNotEmpty()) {
-            var cur = heap.poll()
-            ans.add(map[cur]!!)
-        }//O(NlogN)
+        var currColumn = mutableListOf<Int>()
+        var currColumnIndex: Int = list.get(0).column
+
+        for (triplet in list) {
+            val column: Int = triplet.column
+            val value: Int = triplet.value
+            if (column == currColumnIndex) {
+                currColumn.add(value)
+            } else {
+                ans.add(currColumn)
+                currColumnIndex = column
+                currColumn = mutableListOf<Int>()
+                currColumn.add(value)
+            }
+        }
+        ans.add(currColumn)
+
 
         return ans
     }
@@ -29,10 +50,7 @@ object VerticalOrderTraversalOfABinaryTree {
         if(start == null) return
         var x = cdt[1]
         var y = cdt[0]
-        var list = map.getOrDefault(cdt[1],  mutableListOf())
-        list.add(start.`val`)
-        list.sort()
-        map[cdt[1]] = list
+        list.add(TripLet(y,x,start.`val`))
         dfs(start.left, intArrayOf(y+1,x-1))
         dfs(start.right, intArrayOf(y+1,x+1))
     }
