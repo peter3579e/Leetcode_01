@@ -1,8 +1,5 @@
 package com.android.leetcode.array
 
-import java.util.Deque
-import java.util.Queue
-
 object MaximumSwap {
     fun maximumSwap(num: Int): Int {
         var newNum = num
@@ -41,6 +38,25 @@ object MaximumSwap {
         return ans
     }
 
+    fun maximumSwap3(num: Int): Int {
+        val A = Integer.toString(num).toCharArray()
+        val last = IntArray(10)
+        for (i in A.indices) {
+            last[A[i].code - '0'.code] = i
+        }
+        for (i in A.indices) {
+            for (d in 9 downTo A[i].code - '0'.code + 1) {
+                if (last[d] > i) {
+                    val tmp = A[i]
+                    A[i] = A[last[d]]
+                    A[last[d]] = tmp
+                    return String(A).toInt()
+                }
+            }
+        }
+        return num
+    }
+
     fun maximumSwap2(num: Int): Int {
         val digits = num.toString().toCharArray()
         var maxIndex = digits.lastIndex
@@ -73,5 +89,6 @@ object MaximumSwap {
 }
 
 fun main() {
-    print(MaximumSwap.maximumSwap(98368))
+    var ans = ArrayDeque<String>()
+    print(MaximumSwap.maximumSwap3(98368))
 }

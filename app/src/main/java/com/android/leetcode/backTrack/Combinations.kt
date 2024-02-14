@@ -30,8 +30,30 @@ object Combinations {
             temp.removeAt(temp.size-1)
         }
     }
+    var ans = mutableListOf<List<Int>>()
+    fun backTrack2(nums:IntArray, list:MutableList<Int>) {
+        if(list.size == nums.size) {
+            ans.add(list.toList())
+            return
+        }
+
+        for(i in 0 until nums.size) {
+            var cur = nums[i]
+            if (list.isEmpty() || !list.contains(cur)) {
+                list.add(cur)
+            }else continue
+            backTrack2(nums, list)
+            list.removeAt(list.size-1)
+        }
+    }
 }
 
 fun main () {
-    println(Combinations.combine(4,2))
+
+    //123
+    // if list is empty we add 1
+    // if num = list[0] we continue
+    // if num = list[list.size-1] continue
+    println(Combinations.backTrack2( intArrayOf(1,2,3), mutableListOf()))
+    println(Combinations.ans)
 }
