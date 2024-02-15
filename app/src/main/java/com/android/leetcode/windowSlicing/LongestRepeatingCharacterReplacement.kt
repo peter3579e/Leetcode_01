@@ -136,5 +136,5 @@ object LongestRepeatingCharacterReplacement {
 }
 
 fun main() {
-    print(LongestRepeatingCharacterReplacement.characterReplacement4("AABABBA", 1))
+    print(LongestRepeatingCharacterReplacement.characterReplacement("AABABBA", 1))
 }
