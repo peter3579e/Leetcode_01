@@ -89,6 +89,9 @@ object MaximumSwap {
 }
 
 fun main() {
-    var ans = ArrayDeque<String>()
+    var ans = ArrayDeque<Int>()
+    ans.addFirst(1)
+    ans.addFirst(2)
+    ans.addFirst(3)
     print(MaximumSwap.maximumSwap3(98368))
 }

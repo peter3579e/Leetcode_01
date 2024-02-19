@@ -1,5 +1,6 @@
 package com.android.leetcode.array
 
+
 object SubarraySumEqualsK {
     fun subarraySum(nums: IntArray, k: Int): Int {
         var count = 0
@@ -20,12 +21,13 @@ object SubarraySumEqualsK {
 
     fun subarraySum2(nums: IntArray, k: Int): Int {
         var count = 0
-        var map = hashMapOf<Int,Int>()
+        var map = hashMapOf<Int, Int>()
         var prefixSum = 0
         map[0] = 1
-        for(i in 0 until nums.size) {
+        for (i in 0 until nums.size) {
             prefixSum = prefixSum + nums[i]
-            count = count + map.getOrDefault(prefixSum-k, 0)
+            var key = prefixSum - k
+            count = count + map.getOrDefault(key, 0)
             map[prefixSum] = map.getOrDefault(prefixSum, 0) + 1
         }
 
@@ -34,5 +36,6 @@ object SubarraySumEqualsK {
 }
 
 fun main() {
-    print(SubarraySumEqualsK.subarraySum2(intArrayOf(1,1,1), 2))
+    var string = "petep"
+//    print(SubarraySumEqualsK.subarraySum2(intArrayOf(1,-1,0), 0))
 }

@@ -23,6 +23,8 @@ object MoveZeros {
 
     fun moveZeroesOptimal(nums: IntArray): Unit {
 
+        var map = hashMapOf<Char,Int>()
+        map.remove('a')
         var writer = 0
 
         for(reader in 0..nums.size-1) {

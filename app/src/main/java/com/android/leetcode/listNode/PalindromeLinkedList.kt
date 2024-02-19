@@ -70,19 +70,58 @@ object PalindromeLinkedList {
     }
 }
 
+object Solution3 {
+    class ListNode(var `val`: Int) {
+        var next: ListNode? = null
+    }
+
+    fun isPalindrome(root: ListNode?): Boolean {
+        var fast = root
+        var slow = root
+
+        while(fast != null && fast.next != null) {
+            slow = slow!!.next
+            fast = fast?.next!!.next
+        }
+
+        var second: ListNode? = reverse(slow)
+        var cur = root
+
+        while(second != null && cur != null) {
+            if(second.`val` != cur.`val`) return false
+            cur = cur.next
+            second = second.next
+        }
+
+        return true
+    }
+
+    fun reverse(start: ListNode?): ListNode {
+        var cur: ListNode? = start
+        var prev: ListNode? = null
+        while(cur != null) {
+            var temp = cur!!.next
+            cur!!.next = prev
+            prev = cur
+            cur = temp
+        }
+        return prev!!
+    }
+}
+
 fun main() {
-    var one = Solution.ListNode(1)
-    var two = Solution.ListNode(2)
-//    var two1 = Solution.ListNode(2)
-//    var one1 = Solution.ListNode(1)
+    var one = Solution3.ListNode(1)
+    var two = Solution3.ListNode(2)
+    var two1 = Solution3.ListNode(2)
+    var one1 = Solution3.ListNode(1)
 
     one.next = two
-//    two.next = two1
-//    two1.next = one1
+    two.next = two1
+    two1.next = one1
 
 //    CreateLinkedList.printLinkedList(PalindromeLinkedList.reversedLinkedList(one))
 
-    print(Solution2.isPalidrome(one))
+    print(Solution3.isPalindrome(one))
 }
 
 object Solution {

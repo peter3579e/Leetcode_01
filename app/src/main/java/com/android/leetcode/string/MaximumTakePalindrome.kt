@@ -39,8 +39,35 @@ object MaximumTakePalindrome {
         }
         return true
     }
+
+    fun validPalindrome2(s: String): Boolean {
+
+        var left = 0
+        var right = s.length-1
+
+        while (left < right) {
+            if(s[left] != s[right]) {
+                if(!checkPalidrom(left+1,right,s) && !checkPalidrom(left,right-1,s)) return false
+            }
+            left++
+            right--
+        }
+
+        return true
+    }
+
+    fun checkPalidrom(left:Int, right:Int, s: String): Boolean {
+        var start = left
+        var end = right
+        while(start < end) {
+            if(s[start] != s[end]) return false
+            start ++
+            end --
+        }
+        return true
+    }
 }
 
 fun main() {
-    print(MaximumTakePalindrome.validPalindrome("deeee"))
+    print(MaximumTakePalindrome.validPalindrome2("deeee"))
 }

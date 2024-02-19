@@ -4,7 +4,7 @@ import com.android.leetcode.treeNode.dfs.TreeNode
 import java.util.Stack
 
 object IterativeBSTSearch {
-
+    // same output as inorder traverse
     fun iterativeBSTSearch(root: TreeNode?): IntArray {
         if (root == null) return intArrayOf()
         var array = mutableListOf<Int>()
@@ -25,6 +25,11 @@ object IterativeBSTSearch {
 }
 
 fun main() {
+    /*
+                   1
+               2        5
+            3      4
+     */
     var one = TreeNode(1)
     var two = TreeNode(2)
     var three = TreeNode(3)
