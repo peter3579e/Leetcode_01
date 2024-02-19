@@ -101,7 +101,6 @@ object MeetingRoomsII {
             while (start[i] >= end[j] && j < end.size) {
                 j++
             }
-            room++
         }
 
 

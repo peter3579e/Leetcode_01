@@ -7,12 +7,13 @@ object CombinationSumII {
 //    1,1,6
     var ans = mutableListOf<List<Int>>()
     fun combinationSum2(candidates: IntArray, target: Int): List<List<Int>> {
-        candidates.sorted() // time complexity O(NlogN)
-        backTrack(0,candidates,mutableListOf<Int>(), target)
+        var newArray = candidates.sortedArray()
+        backTrack(0,newArray,mutableListOf<Int>(), target)
         return ans
     }
 
     fun backTrack(sum: Int, array: IntArray, tempList: MutableList<Int>, target: Int) {
+        // 1,1,2,5,6,7,10
 
         if(sum == target){
             ans.add(tempList.toList())
