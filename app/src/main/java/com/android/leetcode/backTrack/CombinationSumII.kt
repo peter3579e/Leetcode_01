@@ -35,6 +35,35 @@ object CombinationSumII {
     }
 }
 
+
+object Solution3 {
+    var ans = mutableListOf<List<Int>>()
+    var temp = mutableListOf<Int>()
+    var sum = 0
+    fun combinationSum2(candidates: IntArray, target: Int): List<List<Int>> {
+        var sort = candidates.sortedArray()
+        backTrack(sort, target, 0)
+        return ans
+    }
+
+    fun backTrack(arr: IntArray, target: Int, index: Int) {
+        if(sum > target) return
+        else if(sum == target) {
+            ans.add(temp.toList())
+            return
+        }
+        for( i in index until arr.size) {
+            var cur = arr[i]
+            if(i != index && cur == arr[i-1]) continue
+            sum = sum + cur
+            temp.add(cur)
+            backTrack(arr, target, i+1)
+            temp.removeAt(temp.size-1)
+            sum = sum - cur
+        }
+    }
+}
+
 fun main() {
-    print(CombinationSumII.combinationSum2(intArrayOf(10,1,2,7,6,1,5),8))
+    print(Solution3.combinationSum2(intArrayOf(3,1,3,5,1,1),8))
 }
