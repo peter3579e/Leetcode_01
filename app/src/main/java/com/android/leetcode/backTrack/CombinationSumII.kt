@@ -47,18 +47,18 @@ object Solution3 {
     }
 
     fun backTrack(arr: IntArray, target: Int, index: Int) {
-        if(sum > target) return
-        else if(sum == target) {
+        if (sum > target) return
+        else if (sum == target) {
             ans.add(temp.toList())
             return
         }
-        for( i in index until arr.size) {
+        for (i in index until arr.size) {
             var cur = arr[i]
-            if(i != index && cur == arr[i-1]) continue
+            if (i != index && cur == arr[i - 1]) continue
             sum = sum + cur
             temp.add(cur)
-            backTrack(arr, target, i+1)
-            temp.removeAt(temp.size-1)
+            backTrack(arr, target, i + 1)
+            temp.removeAt(temp.size - 1)
             sum = sum - cur
         }
     }
