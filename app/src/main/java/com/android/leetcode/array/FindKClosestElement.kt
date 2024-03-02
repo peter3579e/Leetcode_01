@@ -51,8 +51,6 @@ object Optimal {
             }
         }
 
-        var ans = arr.slice(left+1..right-1)
-
         val result = mutableListOf<Int>()
 
         for (i in left + 1 until right) {
@@ -78,6 +76,55 @@ object Optimal {
     }
 }
 
+// this failed
+object mySolution {
+    fun findClosestElements(arr: IntArray, k: Int, x: Int): List<Int> {
+
+        var left = 0
+        var right = arr.size - 1
+
+        while(left < right) {
+            var mid = (left+right) / 2
+            if(x == arr[mid]) {
+                left = x
+                break
+            }else if(arr[mid] > x) {
+                right = mid
+            }else {
+                left = mid + 1
+            }
+        }
+
+        var ans = mutableListOf<Int>()
+        var l = left
+        var r = left
+
+        while (ans.size < k) {
+            if (!isVaild(l - 1, arr)) {
+                ans.add(arr[r])
+                r++
+            }else if (!isVaild(r + 1, arr)) {
+                ans.add(arr[r])
+                l--
+            }
+
+            if (isVaild(l - 1, arr) && isVaild(r + 1, arr)) {
+                if (Math.abs(x - arr[l - 1]) <= Math.abs(x - arr[r + 1])) {
+                    l--
+                    ans.add(0,arr[l])
+                } else if (Math.abs(x - arr[l - 1]) > Math.abs(x - arr[r + 1])) {
+                    r++
+                    ans.add(arr[r])
+                }
+            }
+        }
+
+        return ans
+    }
+
+    private fun isVaild(index:Int, arr: IntArray) = index < arr.size && index >= 0
+}
+
 fun main () {
-    print(Optimal.findClosestElements(intArrayOf(0,0,1,2,3,3,4,7,7,8), 3, 5))
+    print(mySolution.findClosestElements(intArrayOf(1,2), 1, 1))
 }
