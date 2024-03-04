@@ -1,5 +1,7 @@
 package com.android.leetcode.graph
 
+import java.util.Stack
+
 
 object AccountsMerge {
     val visited = mutableSetOf<String>()
@@ -101,6 +103,8 @@ object Solution2 {
 }
 
 fun main() {
-    Solution2.accountsMerge(listOf(listOf("John","johnsmith@mail.com","john_newyork@mail.com"),
+    var stack = Stack<Int>()
+    var ans = Array<IntArray>(stack.size) { intArrayOf()}
+    AccountsMerge.accountsMerge(listOf(listOf("John","johnsmith@mail.com","john_newyork@mail.com"),
         listOf("John","johnsmith@mail.com","john00@mail.com"), listOf("Mary","mary@mail.com"), listOf("John","johnnybravo@mail.com")))
 }
