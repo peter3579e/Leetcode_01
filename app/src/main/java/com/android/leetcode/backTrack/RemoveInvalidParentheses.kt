@@ -48,5 +48,8 @@ object RemoveInvalidParentheses {
 }
 
 fun main() {
-    print(RemoveInvalidParentheses.removeInvalidParentheses("()())()"))
+    var list = listOf(1,2,3,4)
+    var new = list.slice(2..3)
+    print(new)
+//    print(RemoveInvalidParentheses.removeInvalidParentheses("()())()"))
 }

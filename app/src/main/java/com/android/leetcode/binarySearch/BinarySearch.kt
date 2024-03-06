@@ -45,8 +45,23 @@ object BinarySearch {
 
         return -1
     }
+
+    fun binarySearch4(arr: IntArray, target: Int): Int {
+
+        var left = 0
+        var right = arr.size-1
+
+        while(left < right) {
+            var mid = left + (right-left)/2
+            if(arr[mid] == target) return mid
+            else if (arr[mid] > target) right = mid
+            else left = mid + 1
+        }
+
+        return left
+    }
 }
 
 fun main () {
-    println(BinarySearch.binarySearch2(intArrayOf(1,2,3,4,5,6), 5))
+    println(BinarySearch.binarySearch4(intArrayOf(1,2,3,4,5,6), 1))
 }
