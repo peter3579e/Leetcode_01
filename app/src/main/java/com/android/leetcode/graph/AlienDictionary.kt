@@ -177,6 +177,58 @@ object Solution6 {
     }
 }
 
+object Solution8 {
+    fun alienOrder(words: Array<String>): String {
+        var map = hashMapOf<Char,MutableList<Char>>()
+        var visited = hashMapOf<Char,Boolean>()
+
+        for (word in words) {
+            for (char in word) {
+                map.putIfAbsent(char, mutableListOf())
+            }
+        }
+
+        for(i in 0 until words.size-1) {
+            var word1 = words[i]
+            var word2 = words[i+1]
+            if(word1.length > word2.length) {
+                if(word1.startsWith(word2)) return ""
+            }
+            for(j in 0 until minOf(word1.length,word2.length)) {
+                var char1 = word1[j]
+                var char2 = word2[j]
+                if(char1 != char2) {
+                    map[char2] = map.getOrDefault(char2, mutableListOf()).apply {
+                        this.add(char1)
+                    }
+                    break
+                }
+            }
+        }
+        var ans = StringBuilder()
+        fun dfs(char: Char): Boolean {
+            if(visited.contains(char)) {
+                return visited[char]!! == false
+            }
+            visited[char] = false
+            for(c in map[char] ?: listOf()) {
+                if(dfs(c)) return true
+            }
+            ans.append(char)
+            visited[char] = true
+            return false
+        }
+
+        for((key,value) in map) {
+            if(dfs(key)) return ""
+        }
+
+        return ans.toString()
+    }
+}
+
 fun main() {
-    print(Solution6.alienOrder(arrayOf("wrt","wrf","er","ett","rftt")))
+    var map = hashMapOf<Int,Int>()
+    map.remove(1)
+    print(Solution6.alienOrder(arrayOf("z","z")))
 }

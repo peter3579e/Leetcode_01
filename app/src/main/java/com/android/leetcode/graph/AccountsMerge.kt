@@ -1,5 +1,6 @@
 package com.android.leetcode.graph
 
+import java.util.LinkedList
 import java.util.Stack
 
 
@@ -102,9 +103,116 @@ object Solution2 {
     }
 }
 
+object Solution7 {
+    private val adj = hashMapOf<String, MutableList<String>>()
+    private val visited = mutableSetOf<String>()
+
+    fun accountsMerge(accounts: List<List<String>>): List<List<String>> {
+
+        for(i in 0 until accounts.size) {
+            var firstEmail = accounts[i][1]
+            for(j in 2 until accounts[i].size) {
+                var secondEmail = accounts[i][j]
+
+                adj[firstEmail] = adj.getOrDefault(firstEmail, mutableListOf()).apply {
+                    this.add(secondEmail)
+                }
+
+                adj[secondEmail] = adj.getOrDefault(secondEmail, mutableListOf()).apply {
+                    this.add(firstEmail)
+                }
+            }
+        }
+
+        /*
+        johnsmith@mail.com = john_newyork@mail.com, john00@mail.com
+        john_newyork@mail.com = johnsmith@mail.com
+        john00@mail.com = johnsmith@mail.com
+         */
+        var ans = mutableListOf<List<String>>()
+        for(account in accounts) {
+            var temp = mutableListOf<String>()
+            temp.add(account[0])
+            var email = account[1]
+            dfs(email, temp)
+            if(temp.size == 1) continue
+            temp.subList(1,temp.size).sort()
+            ans.add(temp.toList())
+        }
+
+        return ans
+    }
+
+    fun dfs(email: String, temp: MutableList<String>) {
+        if(visited.contains(email)) return
+        temp.add(email)
+        visited.add(email)
+
+        if(adj.contains(email)) {
+            for(e in adj[email]!!) {
+                dfs(e, temp)
+            }
+        }
+    }
+}
+
+object SolutionBFS {
+    fun accountsMerge(accounts: List<List<String>>): List<List<String>> {
+
+        val adj = hashMapOf<String, MutableList<String>>()
+        val visited = mutableSetOf<String>()
+
+        for(i in 0 until accounts.size) {
+            var firstEmail = accounts[i][1]
+            for(j in 2 until accounts[i].size) {
+                var secondEmail = accounts[i][j]
+
+                adj[firstEmail] = adj.getOrDefault(firstEmail, mutableListOf()).apply {
+                    this.add(secondEmail)
+                }
+
+                adj[secondEmail] = adj.getOrDefault(secondEmail, mutableListOf()).apply {
+                    this.add(firstEmail)
+                }
+            }
+        }
+
+        /*
+        johnsmith@mail.com = john_newyork@mail.com, john00@mail.com
+        john_newyork@mail.com = johnsmith@mail.com
+        john00@mail.com = johnsmith@mail.com
+         */
+        var ans = mutableListOf<List<String>>()
+        var queue = LinkedList<String>()
+
+        for(account in accounts) {
+            var temp = mutableListOf<String>()
+            temp.add(account[0])
+            var firstEmail = account[1]
+            if(visited.contains(firstEmail)) continue
+            queue.offer(firstEmail)
+            while(queue.isNotEmpty()) {
+                var cur = queue.poll()!!
+                temp.add(cur)
+                visited.add(cur)
+                if(adj.contains(cur)) {
+                    for(e in adj[cur]!!) {
+                        if(!visited.contains(e)) {
+                            queue.offer(e)
+                            visited.add(e)
+                        }
+                    }
+                }
+            }
+            temp.subList(1,temp.size).sort()
+            ans.add(temp.toList())
+        }
+
+        return ans
+    }
+}
+
 fun main() {
-    var stack = Stack<Int>()
-    var ans = Array<IntArray>(stack.size) { intArrayOf()}
-    AccountsMerge.accountsMerge(listOf(listOf("John","johnsmith@mail.com","john_newyork@mail.com"),
-        listOf("John","johnsmith@mail.com","john00@mail.com"), listOf("Mary","mary@mail.com"), listOf("John","johnnybravo@mail.com")))
+    SolutionBFS.accountsMerge(listOf(listOf("Alex","Alex5@m.co","Alex4@m.co","Alex0@m.co"),
+        listOf("Ethan","Ethan3@m.co","Ethan3@m.co","Ethan0@m.co"), listOf("Kevin","Kevin4@m.co","Kevin2@m.co","Kevin2@m.co"), listOf("Gabe","Gabe0@m.co","Gabe3@m.co","Gabe2@m.co"), listOf("Gabe","Gabe3@m.co","Gabe4@m.co","Gabe2@m.co")))
 }
