@@ -1,6 +1,7 @@
 package com.android.leetcode.mergeSort
 
 // time complexity is O(NlogN)
+// Space complexity is O(logN)
 object MergeSort {
     fun mergeSort(arr: IntArray): IntArray {
         if (arr.size <= 1) {
