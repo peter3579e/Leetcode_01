@@ -141,7 +141,7 @@ object MinimumWindowSubstring {
                 }
                 var c = s[start]
                 if(tMap.contains(c)) {
-                    sMap[s[start]] = sMap[s[start]]!! - 1
+                    sMap[c] = sMap[c]!! - 1
                     if (sMap[c]!! < tMap[c]!!) {
                         formed--
                     }
@@ -168,6 +168,49 @@ object MinimumWindowSubstring {
     }
 }
 
+object Solution11 {
+    fun minWindow(s: String, t: String): String {
+
+        val tMap = t.groupingBy { it }
+            .eachCount()
+            .toMutableMap()
+
+        var formed = tMap.size
+        var start = 0
+        var minWindow = Int.MAX_VALUE
+        var newStart = 0
+        var newEnd = 0
+        val sMap = hashMapOf<Char,Int>()
+
+        for (end in 0 until s.length) {
+            var char = s[end]
+            if (tMap.contains(char)) {
+                sMap[char] = sMap.getOrDefault(char,0) + 1
+                if (sMap[char]!! == tMap[char]!!) {
+                    formed--
+                }
+                while (formed == 0) {
+                    if(end-start+1 < minWindow) {
+                        minWindow = end-start+1
+                        newStart = start
+                        newEnd = end
+                    }
+                    char = s[start]
+                    if(tMap.contains(char)) {
+                        sMap[char] = sMap[char]!! - 1
+                        if(sMap[char]!! < tMap[char]!!) {
+                            formed++
+                        }
+                    }
+                    start++
+                }
+            }
+        }
+        val ans = s.substring(newStart..newEnd)
+        return  ans
+    }
+}
+
 fun main() {
-    print(MinimumWindowSubstring.minWindow3("aa", "aa"))
+    print(Solution11.minWindow("ADOBECODEBANC", "ABC"))
 }

@@ -144,6 +144,88 @@ object Solution3 {
     }
 }
 
+object Soluton123 {
+    fun verticalOrder(root: BinaryTreeVerticalOrderTraversal.TreeNode?): List<List<Int>> {
+        if(root == null) return listOf(listOf())
+        val list = mutableListOf<TripLet>()
+
+        fun dfs(root: BinaryTreeVerticalOrderTraversal.TreeNode?, row: Int, column: Int) {
+            if (root == null) return
+            list.add(TripLet(root.`val`, row, column))
+            dfs(root.left, row+1, column-1)
+            dfs(root.right, row+1, column+1)
+        }
+
+        dfs(root, 0, 0)
+
+        list.sortWith {n1,n2 ->
+            if(n1.col != n2.col) {
+                n1.col.compareTo(n2.col)
+            } else {
+                n1.row.compareTo(n2.row)
+            }
+        }
+
+        val ans = mutableListOf<List<Int>>()
+        var pre = list[0].col
+        var temp = mutableListOf<Int>()
+
+        for (triplet in list) {
+            if(triplet.col == pre) {
+                temp.add(triplet.value)
+            } else {
+                ans.add(temp.toList())
+                temp = mutableListOf<Int>()
+                temp.add(triplet.value)
+                pre = triplet.col
+            }
+        }
+
+        if(temp.isNotEmpty()) {
+            ans.add(temp.toList())
+        }
+
+        return ans
+    }
+
+    data class TripLet(
+        val value: Int,
+        val row: Int,
+        val col: Int
+    )
+}
+
+object SolutionMostOptimal {
+    fun verticalOrder(root: BinaryTreeVerticalOrderTraversal.TreeNode?): List<List<Int>> {
+        if(root == null) return listOf()
+        val map = hashMapOf<Int, MutableList<Int>>()
+        var minCol = Int.MAX_VALUE
+        var maxCol = Int.MIN_VALUE
+        val queue = LinkedList<Pair<BinaryTreeVerticalOrderTraversal.TreeNode,Int>>()
+        queue.offer(Pair(root,0))
+
+        while(queue.isNotEmpty()) {
+            repeat(queue.size) {
+                val cur = queue.poll()!!
+                map[cur.second] = map.getOrDefault(cur.second,mutableListOf()).apply {
+                    this.add(cur.first!!.`val`)
+                }
+                minCol = minOf(minCol, cur.second)
+                maxCol = maxOf(maxCol, cur.second)
+                cur.first.left?.let{ queue.offer(Pair(it,cur.second-1))}
+                cur.first.right?.let{ queue.offer(Pair(it,cur.second+1))}
+            }
+        }
+        var ans = mutableListOf<List<Int>>()
+
+        for(i in minCol..maxCol) {
+            ans.add(map[i]!!)
+        }
+
+        return ans
+    }
+}
+
 fun main() {
     var three = BinaryTreeVerticalOrderTraversal.TreeNode(3)
     var nine = BinaryTreeVerticalOrderTraversal.TreeNode(9)
@@ -154,5 +236,5 @@ fun main() {
     three.right = twenty
     twenty.left = fiften
     twenty.right = seven
-    print(Solution3.verticalOrder(three))
+    print(Soluton123.verticalOrder(three))
 }

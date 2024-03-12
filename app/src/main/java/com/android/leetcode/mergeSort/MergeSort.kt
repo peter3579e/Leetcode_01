@@ -9,8 +9,8 @@ object MergeSort {
         }
 
         val middle = arr.size / 2
-        val left = arr.copyOfRange(0, middle)
-        val right = arr.copyOfRange(middle, arr.size)
+        val left = arr.sliceArray(0..middle - 1)
+        val right = arr.sliceArray(middle..arr.size-1)
 
         return merge(mergeSort(left), mergeSort(right))
     }
@@ -92,7 +92,10 @@ object MergeSort {
 
 fun main() {
     val arr = intArrayOf(12, 11, 13, 5, 6, 7)
-    val sortedArr = MergeSort.mergeSort2(arr)
+    val sortedArr = MergeSort.mergeSort(arr)
+
+    var list = ArrayDeque<MutableList<Int>>()
+    list.contains(listOf(1))
 
     println("Sorted array: ${sortedArr.joinToString(", ")}")
 }
