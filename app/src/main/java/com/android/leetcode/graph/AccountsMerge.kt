@@ -212,7 +212,62 @@ object SolutionBFS {
     }
 }
 
+object SolutionDFS2 {
+    fun accountsMerge(accounts: List<List<String>>): List<List<String>> {
+
+        val emailToEmails = hashMapOf<String,MutableList<String>>()
+
+        for (account in accounts) {
+            val firstEmail = account[1]
+            for (i in 2 until account.size) {
+                val secondEmail = account[i]
+                emailToEmails[firstEmail] = emailToEmails.getOrDefault(firstEmail,mutableListOf()).apply {
+                    this.add(secondEmail)
+                }
+                emailToEmails[secondEmail] = emailToEmails.getOrDefault(secondEmail,mutableListOf()).apply {
+                    this.add(firstEmail)
+                }
+            }
+        }
+        /*
+
+         john1 = john2, john3
+            john2 = john1
+            john3 = john1
+
+         */
+        val visited = mutableSetOf<String>()
+        val ans = mutableListOf<List<String>>()
+        var temp = mutableListOf<String>()
+
+        fun dfs(email: String) {
+            if(visited.contains(email)) return
+            temp.add(email)
+            visited.add(email)
+
+            for(em in emailToEmails[email] ?: listOf()) {
+                if(!visited.contains(em)) {
+                    dfs(em)
+                }
+            }
+        }
+
+        for(account in accounts) {
+            val firstEmail = account[1]
+            if(visited.contains(firstEmail)) continue
+            visited.add(firstEmail)
+            temp.add(account[0])
+            dfs(firstEmail)
+            temp.subList(1,temp.size).sort()
+            ans.add(temp)
+            temp = mutableListOf()
+        }
+
+        return ans
+    }
+}
+
 fun main() {
-    SolutionBFS.accountsMerge(listOf(listOf("Alex","Alex5@m.co","Alex4@m.co","Alex0@m.co"),
+    SolutionDFS2.accountsMerge(listOf(listOf("Alex","Alex5@m.co","Alex4@m.co","Alex0@m.co"),
         listOf("Ethan","Ethan3@m.co","Ethan3@m.co","Ethan0@m.co"), listOf("Kevin","Kevin4@m.co","Kevin2@m.co","Kevin2@m.co"), listOf("Gabe","Gabe0@m.co","Gabe3@m.co","Gabe2@m.co"), listOf("Gabe","Gabe3@m.co","Gabe4@m.co","Gabe2@m.co")))
 }

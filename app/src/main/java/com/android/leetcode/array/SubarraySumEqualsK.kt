@@ -37,5 +37,5 @@ object SubarraySumEqualsK {
 
 fun main() {
     var string = "petep"
-//    print(SubarraySumEqualsK.subarraySum2(intArrayOf(1,-1,0), 0))
+    print(SubarraySumEqualsK.subarraySum2(intArrayOf(-2,1, 2, -2, 5, -2,  1), 3))
 }

@@ -74,8 +74,40 @@ object TopKFrequentsElement {
         }
         return top
     }
+
+
+    fun bucketSolve(nums: IntArray, k: Int): IntArray {
+
+        val numToCount = hashMapOf<Int,Int>()
+
+        for (n in nums) {
+            numToCount[n] = numToCount.getOrDefault(n,0) + 1
+        }
+
+        val arr = List<MutableList<Int>>(nums.size + 1) {mutableListOf()}
+
+        for ((key,value) in numToCount) {
+            arr[value].add(key)
+        }
+
+        val ans = IntArray(k) {0}
+        var index = 0
+
+        for(i in arr.size-1 downTo 0) {
+            if(arr[i].isNotEmpty()) {
+                for(n in arr[i]) {
+                    ans[index] = n
+                    index++
+                    if(index == k ) break
+                }
+                if(index == k ) break
+            }
+        }
+
+        return ans
+    }
 }
 
 fun main() {
-    print(TopKFrequentsElement.topKFrequent2(intArrayOf(1,1,1,2,2,3), 2).toList())
+    print(TopKFrequentsElement.bucketSolve(intArrayOf(1), 1).toList())
 }

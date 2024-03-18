@@ -104,8 +104,37 @@ object ThreeSum {
             pointer++
         }
     }
+
+
+    fun threeSum4(nums: IntArray): List<List<Int>> {
+        val ans = mutableSetOf<List<Int>>()
+        val seen = mutableSetOf<Int>()
+        fun twoSum(index: Int, nums: IntArray, target: Int) {
+            var i = index
+            while( i < nums.size) {
+                val cur = nums[i]
+                val find = -(target + cur)
+                if(seen.contains(find)) {
+                    val sorted = listOf(target, cur, find).sorted() // Change this line
+                    ans.add(sorted)
+                    while (i+1 < nums.size && nums[i+1] == nums[i]) i++
+                }else {
+                    seen.add(cur)
+                }
+                i++
+            }
+        }
+        for(i in 0 until nums.size) {
+            val cur = nums[i]
+            if(i == 0 || nums[i-1] != nums[i]) {
+                twoSum(i+1, nums, cur)
+            }
+        }
+
+        return ans.toList()
+    }
 }
 
 fun main() {
-    println(ThreeSum.threeSumHashMap(intArrayOf(-1,0,1,2,-1,-4)).toString())
+    println(ThreeSum.threeSum4(intArrayOf(-1,0,1,2,-1,-4)).toString())
 }

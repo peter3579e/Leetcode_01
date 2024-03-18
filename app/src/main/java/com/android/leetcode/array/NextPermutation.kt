@@ -74,6 +74,47 @@ object Solution {
     }
 }
 
+object SolutionRevise {
+    fun nextPermutation(nums: IntArray): Unit {
+        var index = -1
+        for (i in nums.size-1 downTo 1) {
+            if(nums[i] > nums[i-1]) {
+                index = i
+                break
+            }
+        }
+
+        if(index != -1) {
+            var swapIndex = -1
+
+            for (i in nums.size-1 downTo 1) {
+                if(nums[i] > nums[index]) {
+                    swapIndex = i
+                    break
+                }
+            }
+            // swap
+            reverseOrSwap(nums, index, swapIndex, true)
+            // reverse
+            reverseOrSwap(nums, index+1, nums.size-1, false)
+        }
+    }
+
+    private fun reverseOrSwap(nums: IntArray, start: Int, end: Int, swap: Boolean) {
+        var startIndex = start
+        var endIndex = end
+
+        while (startIndex < endIndex) {
+            val temp = nums[endIndex]
+            nums[endIndex] = nums[startIndex]
+            nums[startIndex] = temp
+            if(swap) break
+            startIndex ++
+            endIndex --
+        }
+    }
+}
+
 fun main() {
     var string ="bca"
     var array = string.toCharArray()
@@ -82,6 +123,6 @@ fun main() {
     map.contains(2)
     val key: String = java.lang.String.valueOf(sort)
     println(key)
-    Solution.nextPermutation(intArrayOf(1,3,2))
+    SolutionRevise.nextPermutation(intArrayOf(1,3,2))
     // 1,5,8,5,7,6,4,3,1
 }
