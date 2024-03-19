@@ -133,8 +133,32 @@ object ThreeSum {
 
         return ans.toList()
     }
+
+    fun threeSumf(nums: IntArray): List<List<Int>> {
+        nums.sort()
+        var ans = mutableSetOf<List<Int>>()
+        for(i in 0 until nums.size-1) {
+            val cur = nums[i]
+            var left = nums[i+1]
+            var right = nums[nums.size-1]
+            while( left < right) {
+                val sum = cur + left + right
+                if(sum == 0) {
+                    ans.add(listOf(cur,left,right))
+                    left ++
+                    right --
+                } else if (sum < 0) {
+                    right --
+                } else {
+                    left ++
+                }
+            }
+        }
+
+        return ans.toList()
+    }
 }
 
 fun main() {
-    println(ThreeSum.threeSum4(intArrayOf(-1,0,1,2,-1,-4)).toString())
+    println(ThreeSum.threeSumf(intArrayOf(0,0,0)).toString())
 }
