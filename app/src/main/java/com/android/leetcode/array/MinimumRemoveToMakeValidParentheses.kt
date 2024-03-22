@@ -67,8 +67,41 @@ object MinimumRemoveToMakeValidParentheses {
         }
         return sb.toString()
     }
+
+    fun minRemoveToMakeValid3(s: String): String {
+        if(s.isEmpty()) return ""
+
+        val stack = Stack<Pair<Char,Int>>()
+        val ans = StringBuilder()
+
+        for(i in 0 until s.length) {
+            val char = s[i]
+            ans.append(char)
+            if(char == ')') {
+                if(stack.isEmpty()) {
+                    stack.push(Pair(char,i))
+                    continue
+                }
+                if(stack.peek()!!.first == '(') {
+                    stack.pop()!!
+                }else {
+                    stack.push(Pair(char,i))
+                }
+            }else if(char == '(') {
+                stack.push(Pair(char,i))
+            }
+        }
+
+
+        while(stack.isNotEmpty()) {
+            val index = stack.pop()!!.second
+            ans.deleteAt(index)
+        }
+
+        return ans.toString()
+    }
 }
 
  fun main() {
-     MinimumRemoveToMakeValidParentheses.minRemoveToMakeValid2("))((")
+     MinimumRemoveToMakeValidParentheses.minRemoveToMakeValid3("))((")
  }

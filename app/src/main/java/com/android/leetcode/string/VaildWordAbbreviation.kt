@@ -95,8 +95,38 @@ object VaildWordAbbreviation {
         if (j != abbr.length || i != word.length) return false
         return true
     }
+
+    fun validWordAbbreviation5(word: String, abbr: String): Boolean {
+        if(abbr.length > word.length) return false
+
+        var wpointer = 0
+        var apointer = 0
+
+        while(wpointer < word.length && apointer < abbr.length) {
+            if(abbr[apointer] != word[wpointer]) {
+                if(abbr[apointer].isDigit()) {
+                    if(abbr[apointer] == '0') return false
+                    var tempString = 0
+                    while(apointer < abbr.length && abbr[apointer].isDigit()) {
+                        tempString = tempString * 10 + abbr[apointer].digitToInt()
+                        apointer++
+                    }
+                    apointer --
+                    wpointer = wpointer + tempString - 1
+                } else return false
+            }
+
+            wpointer ++
+            apointer ++
+        }
+
+        if(wpointer != word.length || apointer != abbr.length) return false
+
+
+        return true
+    }
 }
 
 fun main() {
-    VaildWordAbbreviation.validWordAbbreviation2("cccc", "c2ca")
+    VaildWordAbbreviation.validWordAbbreviation5("internationalization", "i12iz4n")
 }

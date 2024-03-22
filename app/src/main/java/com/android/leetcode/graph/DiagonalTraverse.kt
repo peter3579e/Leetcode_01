@@ -100,8 +100,85 @@ object DiagonalTraverse {
         }
         return result
     }
+
+    fun findDiagonalOrderOptimal(mat: Array<IntArray>): IntArray {
+        var size = mat.size * mat[0].size
+
+        var row = 0
+        var col = 0
+        var index = 0
+        val ans = IntArray(size) { 0 }
+        var goingUp = true
+
+
+        while(index < size ) {
+            if(goingUp) {
+                while(row >= 0 && col < mat[0].size) {
+                    ans[index] = mat[row][col]
+                    index++
+                    row--
+                    col++
+                }
+                if(col == mat[0].size ) {
+                    row = row + 2
+                    col--
+                } else  {
+                    row++
+                }
+                goingUp = !goingUp
+            }else {
+                while(row < mat.size && col >= 0) {
+                    ans[index] = mat[row][col]
+                    index++
+                    row++
+                    col--
+                }
+                 if(row == mat.size) {
+                    col = col + 2
+                    row--
+                } else {
+                    col++
+                }
+                goingUp = !goingUp
+            }
+        }
+
+        return ans
+    }
+    /*
+        1   2    3
+        4   5    6
+        7   8    9
+     */
+
+    fun findDiagonalMeta(mat: Array<IntArray>): IntArray {
+        val rows = mat.size
+        val cols = mat[0].size
+        val ans = IntArray(rows*cols) { 0 }
+        var index = 0
+
+        for (i in 0 until cols+rows-1) {
+
+            var row = if (i < cols) 0 else i + 1 - cols
+            var col = if (i < cols) i else cols-1
+
+            while (row in 0 until rows && col in 0 until cols) {
+                ans[index] = mat[row][col]
+                index++
+                row++
+                col--
+            }
+
+        }
+
+        return ans
+    }
 }
+/*
+1 2 3
+4 5 6
+ */
 
 fun main() {
-    DiagonalTraverse.findDiagonalOrder2(arrayOf(intArrayOf(1,2,3), intArrayOf(4,5,6), intArrayOf(7,8,9)))
+    print(DiagonalTraverse.findDiagonalMeta(arrayOf(intArrayOf(1,2,3,2), intArrayOf(4,5,6,3))).toList())
 }

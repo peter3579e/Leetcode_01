@@ -126,5 +126,8 @@ object mySolution {
 }
 
 fun main () {
-    print(mySolution.findClosestElements(intArrayOf(1,2), 1, 1))
+   var s = "123"
+    var newString = s.removeRange(1,2)
+    print(newString)
+//    print(mySolution.findClosestElements(intArrayOf(1,2), 1, 1))
 }
