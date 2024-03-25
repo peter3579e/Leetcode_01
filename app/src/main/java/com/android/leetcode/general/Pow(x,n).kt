@@ -107,7 +107,35 @@ object Pow3 {
         }
         return result
     }
+    /*
+     2^10
+     (2*2)^5
+     4*(4*4) ^2
+     4*(16*16) ^ 1
+     */
+
+    fun myPowIterative(x: Double, n: Int): Double {
+        if(n == 0) return 1.0
+        var result = 1.0
+        var num = if(n < 0) 1/x else x
+        var div = if(n < 0) -1.0*n.toDouble() else n.toDouble()
+
+        while(div >= 1.0) {
+            if(div == 1.0) {
+                result = result * num
+            }else if(div % 2.0 == 0.0) {
+                num = num*num
+            } else {
+                result = result * num
+                num = num * num
+                div--
+            }
+            div = div / 2.0
+        }
+
+        return result
+    }
 }
 fun main() {
-    print(Pow3.myPow(2.0,-4))
+    print(Pow3.myPowIterative(2.0,10))
 }

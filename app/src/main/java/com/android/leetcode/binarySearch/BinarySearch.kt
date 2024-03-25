@@ -54,8 +54,8 @@ object BinarySearch {
         while(left < right) {
             var mid = left + (right-left)/2
             if(arr[mid] == target) return mid
-            else if (arr[mid] > target) right = mid
-            else left = mid + 1
+            else if (arr[mid] < target) left = mid + 1
+            else right = mid
         }
 
         return left

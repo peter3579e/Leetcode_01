@@ -63,8 +63,32 @@ object FindKthLargest {
         }
         return -1
     }
+
+    fun findKthLargest3(nums: IntArray, k: Int): Int {
+
+        fun quickSelect(l: Int, r: Int): Int {
+            var pivot = nums[r]
+            var p = l
+
+            for(i in l until r) {
+                if(nums[i] < pivot) {
+                    nums[i] = nums[p].also { nums[p] = nums[i]}
+                    p++
+                }
+            }
+            nums[r] = nums[p].also { nums[p] = nums[r]}
+
+            return when {
+                nums.size - k < p -> quickSelect(l,p-1)
+                nums.size - k > p -> quickSelect(p+1,r)
+                else -> nums[p]
+            }
+        }
+
+        return quickSelect(0,nums.size-1)
+    }
 }
 
 fun main() {
-    FindKthLargest.findKthLargestWhile(intArrayOf(3,2,1,5,6,4),2)
+    FindKthLargest.findKthLargest3(intArrayOf(3,2,1,5,6,4),2)
 }

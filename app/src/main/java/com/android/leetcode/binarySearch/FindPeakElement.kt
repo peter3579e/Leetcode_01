@@ -21,8 +21,46 @@ object FindPeakElement {
         }
         return l
     }
+
+    fun findPeakElement3(nums: IntArray): Int {
+        if(nums.isEmpty()) return 0
+
+        var left = 0
+        var right = nums.size-1
+
+        while(left < right) {
+            val mid = (left+right) / 2
+            if(nums[mid+1] > nums[mid]) {
+                left = mid + 1
+            } else {
+                right = mid
+            }
+        }
+
+        return left
+    }
+
+    fun findPeakElementNeetcode(nums: IntArray): Int {
+        if(nums.isEmpty()) return 0
+
+        var left = 0
+        var right = nums.size-1
+
+        while(left <= right) {
+            val mid = left + (right - left) / 2
+            if(mid + 1 < nums.size && nums[mid+1] > nums[mid]) {
+                left = mid + 1
+            } else if (mid - 1 >= 0 && nums[mid-1] > nums[mid]) {
+                right = mid - 1
+            } else {
+                return mid
+            }
+        }
+
+        return left
+    }
 }
 
 fun main () {
-    print(FindPeakElement.findPeakElement2(intArrayOf(1, 2, 3, 5)))
+    print(FindPeakElement.findPeakElementNeetcode(intArrayOf(5,3,2,1)))
 }
