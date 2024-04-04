@@ -1,5 +1,7 @@
 package com.android.leetcode.array
 
+import androidx.core.text.isDigitsOnly
+
 object ValidateIPAddress {
     fun validateIPv4(IP: String): String {
         val nums = IP.split(".").toTypedArray()
@@ -122,8 +124,48 @@ object ValidateIPAddress {
         }
         return "IPv6"
     }
+
+    fun validIPAddress3(queryIP: String): String {
+
+        if(queryIP.count { c: Char -> c == '.' } == 3) {
+            if(checkIPV4(queryIP)) return "IPv4"
+        } else if (queryIP.count { c: Char -> c == ':' } == 7)  {
+            if(checkIPV6(queryIP)) return "IPv6"
+        }
+
+
+        return "Neither"
+    }
+
+    private fun checkIPV4(s: String): Boolean {
+        val sList = s.split(".")
+        for(string in sList) {
+            if(string.isEmpty()) return false
+            if(string[0] == '0' && string.length > 1) return false
+            var tempNum = 0
+            for(char in string) {
+                if(!(char.isDigit())) return false
+                tempNum = tempNum*10 + char.digitToInt()
+            }
+            if(!(tempNum in 0..255)) return false
+        }
+        return true
+    }
+
+    private fun checkIPV6(s: String): Boolean {
+        val sList = s.split(":")
+        for(string in sList) {
+            if(string.length > 4 || string.length < 1) return false
+            for(char in string) {
+                if(!(char.isDigit()) && !(char.isLowerCase() || char.isUpperCase())) return false
+                if(char.isLowerCase() && !(char - 'a' in 'a' - 'a'..'f' - 'a') ) return false
+                if(char.isUpperCase() && !(char - 'A' in 'A' - 'A'..'F' - 'A')) return false
+            }
+        }
+        return true
+    }
 }
 
 fun main() {
-    print(ValidateIPAddress.validIPAddress2("20EE:FGb8:85a3:0:0:8A2E:0370:7334"))
+    print(ValidateIPAddress.validIPAddress3("1.0.1."))
 }
