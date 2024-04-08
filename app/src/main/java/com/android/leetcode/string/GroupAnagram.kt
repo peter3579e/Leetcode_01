@@ -48,8 +48,42 @@ object GroupAnagram {
         }
         return ans1
     }
+
+    fun groupAnagrams3(strs: Array<String>): List<List<String>> {
+        if(strs.isEmpty() || strs.size == 1) return listOf()
+        val map = hashMapOf<String,MutableList<String>>()
+
+        for(string in strs) {
+            val alphaArray = IntArray(26){0}
+            for(char in string) {
+                alphaArray[char - 'a'] = alphaArray[char - 'a'] + 1
+            }
+            // form the string
+            val newString = StringBuilder()
+            for(i in 0 until alphaArray.size) {
+                val num = alphaArray[i]
+                if(num != 0) {
+                    repeat(num) {
+                        newString.append("$i%")
+                    }
+                }
+            }
+            val str = newString.toString()
+            map[str] = map.getOrDefault(str, mutableListOf()).apply {
+                this.add(string)
+            }
+        }
+
+        val ans = mutableListOf<List<String>>()
+
+        for((key,value) in map) {
+            ans.add(value)
+        }
+
+        return ans
+    }
 }
 
 fun main() {
-    print(GroupAnagram.groupAnagrams(arrayOf("bdddddddddd","bbbbbbbbbbc")))
+    print(GroupAnagram.groupAnagrams3(arrayOf("eat","tea","tan","ate","nat","bat")))
 }
