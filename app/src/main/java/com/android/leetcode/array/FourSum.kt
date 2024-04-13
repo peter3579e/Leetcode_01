@@ -75,9 +75,47 @@ object FourSum {
 
         return ans
     }
+
+    fun fourSum4(nums: IntArray, target: Int): List<List<Int>> {
+
+        if(nums.isEmpty()) return listOf(listOf())
+        nums.sort()
+        val ans = mutableListOf<List<Int>>()
+        fun backTrack(index: Int, sum: Int, temp: MutableList<Int>) {
+            if(temp.size == 2) {
+                var left = index
+                var right = nums.size-1
+                while(left < right) {
+                    val tempSum = sum + nums[left] + nums[right]
+                    if( tempSum == target) {
+                        ans.add(temp + listOf(nums[left],nums[right]))
+                        while(left < right && nums[left] == nums[left+1]) left++
+                        left++
+                        right--
+                    } else if (tempSum < target) {
+                        left ++
+                    } else {
+                        right --
+                    }
+                }
+            } else {
+                for( i in index until nums.size-2) {
+                    val cur = nums[i]
+                    if(i != index && cur == nums[i-1]) continue
+                    temp.add(cur)
+                    backTrack(i+1,sum+cur,temp)
+                    temp.removeLast()
+                }
+            }
+        }
+
+        backTrack(0,0,mutableListOf())
+
+        return ans
+    }
 }
 
 fun main() {
 
-    print(FourSum.fourSum(intArrayOf(1,0,-1,0,-2,2),0))
+    print(FourSum.fourSum4(intArrayOf(1,0,-1,0,-2,2),0))
 }
