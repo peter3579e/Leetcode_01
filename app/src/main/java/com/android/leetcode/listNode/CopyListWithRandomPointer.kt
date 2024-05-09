@@ -104,6 +104,39 @@ object CopyListWithRandomPointer {
         cur?.random?.let { newCur.random = oldToNew[it]  }
     }
 
+    fun copyRandomList4(node: Node?): Node? {
+
+        var pointer: Node? = node
+        val dummyHead = Node(0)
+        var cur = dummyHead
+        val oldToNew = hashMapOf<Node,Node>()
+
+        while(pointer != null) {
+            var newRandom: Node? = null
+            pointer.random?.let {
+                if(oldToNew.contains(it)) {
+                    newRandom = oldToNew[it]!!
+                } else {
+                    newRandom = Node(it.`val`)
+                    oldToNew[it] = newRandom!!
+                }
+            }
+            var newNode: Node?
+            if(oldToNew.contains(pointer)) {
+                newNode = oldToNew[pointer]!!
+            } else {
+                newNode = Node(pointer.`val`)
+                oldToNew[pointer] = newNode
+            }
+            newNode.random = newRandom
+            cur.next = newNode
+            pointer = pointer.next
+            cur = cur.next!!
+        }
+
+
+        return dummyHead.next
+    }
 
 }
 
