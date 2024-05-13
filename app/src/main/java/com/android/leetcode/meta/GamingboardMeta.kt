@@ -202,11 +202,16 @@ object GamingboardMeta {
 fun main() {
     print(GamingboardMeta.findPathBFS(arrayOf(intArrayOf(0,0,0), intArrayOf(1,0,0), intArrayOf(0,0,0))))
     /*
-    * 000
-    * 100
-    * 000
+    * 000          0 1 2
+    * 100            1 2
+    * 000            2 2
     *  00 -> 01 -> 02 -> 12 -> 22
     *  00 -> 10 -> 20 -> 21 -> 22
+    * 0,1,2,3,4,5,0
+    * 1,2,*,4,5,*,0
+    * 0,0,*,5,*,*,0
+    * 0,0,*,6,*,0,*
+    * *,*,*,7,0,0,0
     * */
     //intArrayOf(0,0,0,0,0,0,0), intArrayOf(0,0,1,0,0,1,0), intArrayOf(0,0,1,0,1,1,0), intArrayOf(0,0,1,0,1,0,1), intArrayOf(1,1,1,0,0,0,0)
 }
