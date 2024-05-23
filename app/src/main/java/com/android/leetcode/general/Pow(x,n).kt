@@ -135,7 +135,39 @@ object Pow3 {
 
         return result
     }
+
+    /*
+    2 ^ 10
+    4 ^ 5
+    4 * ( 4 ^ 4)
+    4 * (16 ^ 2)
+     */
+
+    fun myPow4(x: Double, n: Int): Double {
+        var num = x
+        var pow = n.toLong()
+        var prev = 1.0
+
+        if(n < 0) return myPow(1/x,n*-1)
+
+        while(true) {
+
+            if(pow == 1L) {
+                prev = num * prev
+                break
+            } else if(n%2L == 0L) {
+                num = num * num
+            } else {
+                prev = prev * num
+                num = num * num
+                pow --
+            }
+            pow = pow / 2L
+        }
+
+        return prev
+    }
 }
 fun main() {
-    print(Pow3.myPowIterative(2.0,10))
+    print(Pow3.myPow4(2.0,10))
 }

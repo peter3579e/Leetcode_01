@@ -173,12 +173,41 @@ object DiagonalTraverse {
 
         return ans
     }
-}
-/*
-1 2 3
-4 5 6
+
+    /*
+matrix.size + matrix[0].size - 1
+row  = if(i > matrix[0].size) i - matrix[0].size else 0
+col = if(i > matrix[0].size) matrix[0].size else i-1
  */
+    fun diagonalTraverse(matrix: Array<IntArray>): List<Int> {
+
+        val col = matrix[0].size
+        val row = matrix.size
+        val ans = mutableListOf<Int>()
+
+        for (i in 1 until col+row) {
+
+            var r = if (i > col) i - col else 0
+            var c = if (i > col) col - 1 else i - 1
+
+            while (r in 0 until row && c in 0 until col) {
+                ans.add(matrix[r][c])
+                r = r + 1
+                c = c - 1
+            }
+        }
+
+        return ans
+    }
+    /*
+    1 2 3
+    4 5 6
+    7 8 9
+     */
+}
+
 
 fun main() {
-    print(DiagonalTraverse.findDiagonalMeta(arrayOf(intArrayOf(1,2,3,2), intArrayOf(4,5,6,3))).toList())
+    print(DiagonalTraverse.diagonalTraverse(arrayOf(intArrayOf(1,2,3,2), intArrayOf(4,5,6,3))).toList())
+    Math.random()
 }

@@ -113,9 +113,53 @@ object FourSum {
 
         return ans
     }
+
+  // -2,-1,0,0,1,2
+    fun fourSum3(nums: IntArray, target: Int): List<List<Int>> {
+        nums.sort()
+        val ans = mutableListOf<List<Int>>()
+
+
+        fun backTrack(index: Int, tempList:MutableList<Int>, sum: Int) {
+
+            if(tempList.size == 2) {
+                var left = index
+                var right = nums.size - 1
+
+                while(left < right) {
+                    var newSum = nums[left] + nums[right] + sum
+                    if(newSum == 0) {
+                        ans.add(tempList + listOf(nums[left],nums[right]))
+                        while(left < right && nums[left] == nums[left+1]) left++
+                        left++
+                        right--
+                    } else if (newSum < 0) {
+                        left ++
+                    } else {
+                        right --
+                    }
+                }
+                return
+            }
+
+            for( i in index until nums.size - 1) {
+                if(i != index && nums[i] == nums[i-1]) continue
+                tempList.add(nums[i])
+                backTrack(i+1,tempList, sum + nums[i])
+                tempList.removeLast()
+            }
+        }
+
+        for(i in 0 until nums.size-2) {
+            if(i != 0 && nums[i] == nums[i-1]) continue
+            backTrack(i+1,mutableListOf(nums[i]), nums[i])
+        }
+
+        return ans
+    }
 }
 
 fun main() {
 
-    print(FourSum.fourSum4(intArrayOf(1,0,-1,0,-2,2),0))
+    print(FourSum.fourSum3(intArrayOf(1000000000,1000000000,1000000000,1000000000),-294967296))
 }
