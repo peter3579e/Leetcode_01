@@ -10,40 +10,57 @@ object MergeTwoIntervalLists {
 
     For example,
     A: [1,5], [10,14], [16,18]
+                        ^
     B: [2,6], [8,10], [11,20]
+                             ^
 
     output [1,6], [8, 20]
+
+    [1,6] [8,20]
      */
 
-    fun mergerIntervals(A: List<Pair<Int, Int>>, B: List<Pair<Int, Int>>) {
-        var i = 0
-        var j = 0
-        val res = mutableListOf<Pair<Int, Int>>()
 
-        while (i < A.size || j < B.size) {
-            val curr: Pair<Int, Int>
-            if (i == A.size) {
-                curr = B[j]
-                j++
-            } else if (j == B.size) {
-                curr = A[i]
-                i++
-            } else if (A[i].first < B[j].first) {
-                curr = A[i]
-                i++
+
+    fun mergeTwo(arr1: List<Pair<Int,Int>>, arr2: List<Pair<Int,Int>>) : List<Pair<Int,Int>> {
+
+
+        var p1 = 0
+        var p2 = 0
+        val ans = ArrayList<Pair<Int,Int>>()
+
+        fun merge(pair: Pair<Int,Int>) {
+            if (ans.isEmpty() || ans[ans.size-1].second < pair.first) {
+                ans.add(pair)
             } else {
-                curr = B[j]
-                j++
-            }
-            if (res.isNotEmpty() && res.last().second >= curr.first) {
-                res[res.lastIndex] = Pair(res.last().first, maxOf(res.last().second, curr.second))
-            } else {
-                res.add(curr)
+                val top = ans.removeLast()
+                ans.add(Pair(minOf(top.first,pair.first), maxOf(top.second,pair.second)))
             }
         }
+
+        while (p1 < arr1.size || p2 < arr2.size) {
+            if (p1 == arr1.size) {
+                merge(arr2[p2])
+                p2++
+            } else if (p2 == arr2.size) {
+                merge(arr1[p1])
+                p1++
+            } else {
+                if (arr1[p1].first <= arr2[p2].first) {
+                    merge(arr1[p1])
+                    p1++
+                } else {
+                    merge(arr2[p2])
+                    p2++
+                }
+            }
+        }
+
+
+        return ans
     }
+
 }
 
 fun main() {
-    MergeTwoIntervalLists.mergerIntervals(listOf(Pair(1,5), Pair(10, 14), Pair(16,18)), listOf(Pair(2,6), Pair(8,10), Pair(11,20)))
+    print(MergeTwoIntervalLists.mergeTwo(listOf(Pair(1,5), Pair(10, 14), Pair(16,18)), listOf(Pair(2,6), Pair(8,10), Pair(11,20))))
 }
