@@ -1,5 +1,7 @@
 package com.android.leetcode.meta
 
+import java.util.Stack
+
 object MinimumSticker {
     /**
      * Problem Description:
@@ -61,5 +63,33 @@ fun main() {
     print(Stickers("abc", "def")) => -1
     print(Stickers("banaan", "banana")) => 1
      */
-    print(MinimumSticker.findMinimumNumberOfSticker("banaan", "banana"))
+    fun evalRPN(tokens: Array<String>): Int {
+        val stack = Stack<Int>()
+
+        fun operAnd(s: String) {
+            val num1 = stack.pop()!!
+            val num2 = stack.pop()!!
+            when {
+                s == "+" -> stack.push(num1+num2)
+                s == "/" -> stack.push(num2/num1)
+                s == "*" -> stack.push(num1*num2)
+                s == "-" -> stack.push(num2-num1)
+            }
+        }
+
+        for(s in tokens) {
+            if(!s.isEmpty() && s != " ") {
+                if(!s[0].isDigit()) {
+                    operAnd(s)
+                } else {
+                    stack.push(s.toInt())
+                }
+            }
+        }
+
+
+        return stack.pop()!!
+    }
+    evalRPN(arrayOf("10","6","9","3","+","-11","*","/","*","17","+","5","+"))
+//    print(MinimumSticker.findMinimumNumberOfSticker("banaan", "banana"))
 }

@@ -60,8 +60,30 @@ object BinarySearch {
 
         return left
     }
+
+    fun subarraysDivByK(nums: IntArray, k: Int): Int {
+        val n = nums.size
+        var prefixMod = 0
+        var result = 0
+
+        // There are k mod groups 0...k-1.
+        val modGroups = IntArray(k)
+        modGroups[0] = 1
+
+        for (num in nums) {
+            // Take modulo twice to avoid negative remainders.
+            prefixMod = (prefixMod + num % k + k) % k
+            // Add the count of subarrays that have the same remainder as the current
+            // one to cancel out the remainders.
+            result += modGroups[prefixMod]
+            modGroups[prefixMod]++
+        }
+
+        return result
+    }
 }
 
 fun main () {
     println(BinarySearch.binarySearch4(intArrayOf(1,2,3,4,5,6), 1))
+
 }

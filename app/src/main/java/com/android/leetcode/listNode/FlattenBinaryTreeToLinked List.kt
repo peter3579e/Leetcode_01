@@ -1,3 +1,4 @@
+
 package com.android.leetcode.listNode
 
 object FlattenBinaryTreeToLinked{

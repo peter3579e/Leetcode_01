@@ -70,16 +70,49 @@ object InsertIntoASortedCircularLinkedList {
         }
         return head
     }
+
+    fun insert3(head: Node?, insertVal: Int): Node? {
+        val node = Node(insertVal)
+        if(head == null) {
+            node.next = node
+            return node
+        }
+
+        var prev = head
+        var cur = head.next
+
+        fun insert(): Node {
+            prev!!.next = node
+            node.next = cur
+            return head
+        }
+
+        while(true) {
+            if(prev!!.`val` <= insertVal && cur!!.`val` >= insertVal) {
+                return insert()
+            } else if ( prev.`val` > cur!!.`val`) {
+                if (prev.`val` < insertVal || cur.`val` > insertVal) {
+                    return insert()
+                }
+            } else if( prev.next == head) {
+                return insert()
+            }
+            prev = prev.next!!
+            cur = cur.next
+        }
+
+        return null
+    }
 }
 
 fun main() {
-    val N3 = InsertIntoASortedCircularLinkedList.Node(3)
-    val N4 = InsertIntoASortedCircularLinkedList.Node(4)
-    val N1 = InsertIntoASortedCircularLinkedList.Node(1)
+    val N3 = InsertIntoASortedCircularLinkedList.Node(1)
+    val N4 = InsertIntoASortedCircularLinkedList.Node(3)
+    val N1 = InsertIntoASortedCircularLinkedList.Node(5)
     N3.next = N4
     N4.next = N1
     N1.next = N3
-    InsertIntoASortedCircularLinkedList.insertOptimal(N3, 2)
+    InsertIntoASortedCircularLinkedList.insert3(N3, 1)
 }
 
 
