@@ -118,6 +118,57 @@ data class Node(
     var next: Node? = null
 )
 
+class LRUCache2(val capacity: Int) {
+
+    val map = hashMapOf<Int,Node>()
+
+    val head = Node(0,0)
+    val tail = Node(0,0)
+
+    init {
+        head.next = tail
+        tail.prev = head
+    }
+
+    fun get(key: Int): Int {
+        return if(map.contains(key)) {
+            val node = map[key]!!
+            remove(node)
+            insert(node)
+            node.value
+        } else -1
+    }
+
+    fun put(key: Int, value: Int) {
+        if (map.contains(key)) {
+            val node = map[key]!!
+            remove(node)
+        }
+
+        insert(Node(key,value))
+
+        if (map.size > capacity) remove(head.next!!)
+    }
+
+    private fun insert(node: Node) {
+        tail.prev = node.also {
+            tail.prev!!.next = it
+            it.prev = tail.prev
+            it.next = tail
+        }
+        map[node.key] = node
+    }
+
+    private fun remove(node: Node) {
+        val prev = node.prev
+        val next = node.next
+        prev!!.next = next
+        next!!.prev = prev
+        map.remove(node.key)
+    }
+
+}
+
 fun main() {
     var lruCache = LRUCacheMap(2)
 
