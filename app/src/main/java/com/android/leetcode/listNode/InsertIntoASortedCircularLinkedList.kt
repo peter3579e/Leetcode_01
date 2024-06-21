@@ -103,6 +103,33 @@ object InsertIntoASortedCircularLinkedList {
 
         return null
     }
+
+    fun insert4(head: Node?, insertVal: Int): Node? {
+        if(head == null) {
+            val node = Node(insertVal)
+            node.next = node
+            return node
+        }
+        var cur = head.next!!
+        var prev = head!!
+
+        while(true) {
+            if(insertVal in prev.`val`..cur.`val`) {
+                break
+            } else if(cur.`val` < prev.`val`) {
+                if(insertVal > prev.`val` || insertVal < cur.`val`) break
+            } else if(prev.next!! == head) break
+            cur = cur.next!!
+            prev = prev.next!!
+        }
+
+        val newNode = Node(insertVal)
+
+        prev.next = newNode
+        newNode.next = cur
+
+        return head
+    }
 }
 
 fun main() {
@@ -112,7 +139,7 @@ fun main() {
     N3.next = N4
     N4.next = N1
     N1.next = N3
-    InsertIntoASortedCircularLinkedList.insert3(N3, 1)
+    InsertIntoASortedCircularLinkedList.insert4(N3, 1)
 }
 
 

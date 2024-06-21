@@ -138,23 +138,73 @@ object CopyListWithRandomPointer {
         return dummyHead.next
     }
 
+    fun copyRandomList5(node: Node?): Node? {
+        if(node == null) return null
+        val mapOldToNew = hashMapOf<Node,Node>()
+        var cur: Node? = node
+        val dummyHead = Node(node!!.`val`)
+        var newCur = dummyHead
+
+        while(cur != null) {
+            var newNode = Node(0)
+            if(cur.random != null) {
+                if(mapOldToNew.contains(cur.random)) {
+                    newCur.random = mapOldToNew[cur.random]!!
+                } else {
+                    newNode = Node(cur.random!!.`val`)
+                    mapOldToNew[cur.random!!] = newNode
+                    newCur.random = newNode
+                }
+            }
+
+            if(cur.next != null) {
+                if(mapOldToNew.contains(cur.next)) {
+                    newCur.next = mapOldToNew[cur.next]!!
+                } else {
+                    newNode = Node(cur.next!!.`val`)
+                    mapOldToNew[cur.next!!] = newNode
+                    newCur.next = newNode
+                }
+            }
+            newCur.next?.let { newCur = it}
+            cur = cur.next
+        }
+
+        return dummyHead
+    }
+
 }
 
 fun main() {
     var four = CopyListWithRandomPointer.Node(4)
     var seven = CopyListWithRandomPointer.Node(7)
+    var thrtenn = CopyListWithRandomPointer.Node(13)
+    var eleven = CopyListWithRandomPointer.Node(11)
+    var ten = CopyListWithRandomPointer.Node(10)
+    var one = CopyListWithRandomPointer.Node(1)
     var Ntwo = CopyListWithRandomPointer.Node(-2)
 
     // 4 -> 7 -> -2
 
-    four.next = seven
-    four.random = Ntwo
-    seven.random = four
-    seven.next = Ntwo
-    Ntwo.next = null
-    Ntwo.random = null
+//    four.next = thrtenn
+//    four.random = null
+//    seven.random = four
+//    seven.next = Ntwo
+//    Ntwo.next = null
+//    Ntwo.random = null
+
+    seven.next = thrtenn
+    seven.random = null
+    thrtenn.next = eleven
+    thrtenn.random = seven
+    eleven.next = ten
+    eleven.random = one
+    ten.next = one
+    ten.random = eleven
+    one.next = null
+    one.random = seven
 
 
-    CopyListWithRandomPointer.copyRandomList(four)
+    CopyListWithRandomPointer.copyRandomList5(seven)
 
 }

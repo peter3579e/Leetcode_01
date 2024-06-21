@@ -180,5 +180,5 @@ fun main() {
         print(get(1))
         print(get(2))
     }
-
+    IntRange(1,2).random()
 }
