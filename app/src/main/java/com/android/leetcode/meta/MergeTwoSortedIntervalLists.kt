@@ -115,8 +115,48 @@ object MergeTwoIntervalLists {
         return ans
     }
 
+
+    fun mergeTwo2(list1: List<Pair<Int,Int>>, list2: List<Pair<Int,Int>>): List<Pair<Int,Int>> {
+        if (list1.isEmpty() || list2.isEmpty()) {
+            return if (list1.isEmpty()) list2 else list1
+        }
+        var pointer1 = 0
+        var pointer2 = 0
+        var ans = mutableListOf<Pair<Int,Int>>()
+
+        fun merge(pair: Pair<Int,Int>) {
+            if (ans.isNotEmpty() && ans.last().second >= pair.first) {
+                val top = ans.removeLast()
+                ans.add(Pair(top.first, maxOf(top.second, pair.second)))
+            } else {
+                ans.add(pair)
+            }
+        }
+
+        while (pointer1 < list1.size || pointer2 < list2.size) {
+
+            if (pointer1 == list1.size) {
+                merge(list2[pointer2])
+                pointer2++
+            } else if (pointer2 == list2.size) {
+                merge(list1[pointer1])
+                pointer1++
+            } else {
+                if (list1[pointer1].first < list2[pointer2].first) {
+                    merge(list1[pointer1])
+                    pointer1++
+                } else {
+                    merge(list2[pointer2])
+                    pointer2++
+                }
+            }
+        }
+
+        return ans
+    }
+
 }
 
 fun main() {
-    print(MergeTwoIntervalLists.mergeTwoInterval(listOf(Pair(1,5), Pair(10, 14), Pair(16,18)), listOf(Pair(2,6), Pair(8,10), Pair(11,20))))
+    print(MergeTwoIntervalLists.mergeTwo2(listOf(Pair(1,5), Pair(10, 14), Pair(16,18)), listOf(Pair(2,6), Pair(8,10), Pair(11,20))))
 }

@@ -48,4 +48,8 @@ object BasicCaculator3 {
 
 fun main() {
     BasicCaculator3.calculate("2*(5+5*2)/3+(6/2+8)")
+    /*
+    stack = 30
+    op *
+     */
 }
